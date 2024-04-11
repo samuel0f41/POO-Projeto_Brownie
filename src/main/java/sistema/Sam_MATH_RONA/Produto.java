@@ -6,7 +6,6 @@ public class Produto {
     private String nome;
     private Tipo tipo;
     private Sabores sabores;
-
     private int qtEstoque;
     private double preco;
     private String codigo;
@@ -21,7 +20,7 @@ public class Produto {
     }
     public Produto(){
         this.qtEstoque = 0;
-        this.sabores = Sabores.IDEFINIDO;
+        this.sabores = Sabores.UNICO;
         this.tipo = Tipo.INDEFINIDO;
     }
 
