@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="projeto_Brownie:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/projeto_Brownie_jar</output-path>
+    <root id="archive" name="projeto_Brownie.jar">
+      <element id="module-output" name="projeto_Brownie" />
+    </root>
+  </artifact>
+</component>
