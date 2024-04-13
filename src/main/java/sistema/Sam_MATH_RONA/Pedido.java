@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-public class Pedidos {
+public class Pedido {
     private Cliente cliente;
     private List<ItensPedidos> itensPedidos;
     private String codigoDoPedido;
@@ -13,7 +13,7 @@ public class Pedidos {
 
 
 
-    public Pedidos(Cliente cliente, List<ItensPedidos> itensPedidos, String codigoDoPedido) {
+    public Pedido(Cliente cliente, List<ItensPedidos> itensPedidos, String codigoDoPedido) {
         this.cliente = cliente;
         this.itensPedidos = itensPedidos;
         this.codigoDoPedido = codigoDoPedido;
@@ -48,8 +48,6 @@ public class Pedidos {
         this.total = total;
     }
 
-
-
     public void setLanches(List<ItensPedidos> itensPedidos) {
         this.itensPedidos = itensPedidos;
     }
@@ -80,7 +78,7 @@ public class Pedidos {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Pedidos pedidos = (Pedidos) o;
+        Pedido pedidos = (Pedido) o;
         return Objects.equals(codigoDoPedido, pedidos.codigoDoPedido);
     }
 

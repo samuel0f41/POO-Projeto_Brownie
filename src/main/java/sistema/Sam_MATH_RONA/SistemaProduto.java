@@ -4,10 +4,15 @@ import java.util.List;
 
 public class SistemaProduto implements Sistema_Divino_Brownie{
 
-    public List<Pedidos> pedidos(){
+    public List<Pedido> pedidos(){
         return null;
     }
 
+
+    @Override
+    public void abasteceEstoqueProduto(String codigo) {
+
+    }
 
 
 }
