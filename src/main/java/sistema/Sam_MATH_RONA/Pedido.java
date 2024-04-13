@@ -5,21 +5,21 @@ import java.util.List;
 import java.util.Objects;
 
 public class Pedido {
+    private String codigoDoPedido;
     private Cliente cliente;
     private List<ItensPedidos> itensPedidos;
-    private String codigoDoPedido;
-    private double total;
+    private double totalpedido;
+    private EstadoPedido estadoPedido; // ex: pendente / em andamento(preparo) / finalizado(entregue)
     private LocalDateTime data = LocalDateTime.now();
 
 
 
-    public Pedido(Cliente cliente, List<ItensPedidos> itensPedidos, String codigoDoPedido) {
+    public Pedido( String codigoDoPedido ,Cliente cliente, List<ItensPedidos> itensPedidos) {
+        this.codigoDoPedido = codigoDoPedido;
         this.cliente = cliente;
         this.itensPedidos = itensPedidos;
-        this.codigoDoPedido = codigoDoPedido;
+        this.estadoPedido = EstadoPedido.PENDENTE;
     }
-
-
     public String getCodigoDoPedido() {
         return codigoDoPedido;
     }
@@ -36,7 +36,7 @@ public class Pedido {
         this.data = data;
     }
 
-    public double getTotal() {
+    public double getTotalpedido() {
         double totalDoPedido = 0.0;
         for(ItensPedidos i: this.itensPedidos){
             totalDoPedido += i.getPrecoTotal();
@@ -44,8 +44,9 @@ public class Pedido {
         return totalDoPedido;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
+    public void setTotalpedido(double totalpedido) {
+        //nesse set poderia ser um setDesconto(double desconto)
+        this.totalpedido = totalpedido;
     }
 
     public void setLanches(List<ItensPedidos> itensPedidos) {
@@ -55,7 +56,7 @@ public class Pedido {
     @Override
     public String toString() {
         return "Pedido: "+ this.codigoDoPedido + "\nCliente:  " + this.cliente.getNome()+ "\nEndereço: " +
-                this.cliente.getEndereco()+ "\n" + this.itensPedidos + "\n Total a pagar" +this.total;
+                this.cliente.getEndereco()+ "\n" + this.itensPedidos + "\n Total a pagar" +this.totalpedido;
     }
 
     public Cliente getCliente() {
