@@ -1,4 +1,4 @@
-package sistema.Sam_MATH_RONA;
+package sistema.Sam_Math_Rona;
 
 public enum Tipo {
     BROWNIE, INDEFINIDO

@@ -1,30 +1,42 @@
-package sistema.Sam_MATH_RONA;
+package sistema.Sam_Math_Rona;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 public class Pedido {
-    private String codigoDoPedido;
+    private int codigoDoPedido;
     private Cliente cliente;
     private List<ItensPedidos> itensPedidos;
-    private double totalpedido;
+    private double valorTotalpedidos;
     private EstadoPedido estadoPedido; // ex: pendente / em andamento(preparo) / finalizado(entregue)
     private LocalDateTime data = LocalDateTime.now();
 
 
 
-    public Pedido( String codigoDoPedido ,Cliente cliente, List<ItensPedidos> itensPedidos) {
+    public Pedido( int codigoDoPedido ,Cliente cliente, List<ItensPedidos> itensPedidos) {
         this.codigoDoPedido = codigoDoPedido;
         this.cliente = cliente;
         this.itensPedidos = itensPedidos;
         this.estadoPedido = EstadoPedido.PENDENTE;
     }
-    public String getCodigoDoPedido() {
+    public Pedido(){
+        valorTotalpedidos = getValorTotalpedidos();
+    }
+
+    public EstadoPedido getEstadoPedido() {
+        return estadoPedido;
+    }
+
+    public void setEstadoPedido(EstadoPedido estadoPedido) {
+        this.estadoPedido = estadoPedido;
+    }
+
+    public int getCodigoDoPedido() {
         return codigoDoPedido;
     }
 
-    public void setCodigoDoPedido(String codigoDoPedido) {
+    public void setCodigoDoPedido(int codigoDoPedido) {
         this.codigoDoPedido = codigoDoPedido;
     }
 
@@ -36,7 +48,7 @@ public class Pedido {
         this.data = data;
     }
 
-    public double getTotalpedido() {
+    public double getValorTotalpedidos() {
         double totalDoPedido = 0.0;
         for(ItensPedidos i: this.itensPedidos){
             totalDoPedido += i.getPrecoTotal();
@@ -44,9 +56,9 @@ public class Pedido {
         return totalDoPedido;
     }
 
-    public void setTotalpedido(double totalpedido) {
+    public void setValorTotalpedidos(double valorTotalpedidos) {
         //nesse set poderia ser um setDesconto(double desconto)
-        this.totalpedido = totalpedido;
+        this.valorTotalpedidos = valorTotalpedidos;
     }
 
     public void setLanches(List<ItensPedidos> itensPedidos) {
@@ -56,7 +68,7 @@ public class Pedido {
     @Override
     public String toString() {
         return "Pedido: "+ this.codigoDoPedido + "\nCliente:  " + this.cliente.getNome()+ "\nEndereço: " +
-                this.cliente.getEndereco()+ "\n" + this.itensPedidos + "\n Total a pagar" +this.totalpedido;
+                this.cliente.getEndereco()+ "\n" + this.itensPedidos + "\n Total a pagar" +this.valorTotalpedidos;
     }
 
     public Cliente getCliente() {
