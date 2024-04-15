@@ -9,8 +9,10 @@ public interface Sistema_Divino_Brownie {
 
     String vendaRealizarPedido(Cliente cliente, List<ItensPedidos> itensPedidos) throws PedidoJaComCodigoJaExiste;
     List<Pedido> pedidosFaltaConcluir();
+    void cancelarPedido(int codigo)throws NaoExistePedidoException;
     String finalizarVenda(int codigoPedido) throws NaoExistePedidoException;
     void cadastrarProduto(Produto produto) throws ProdutoJaExisteException;
+    void removerProduto(String codigo)throws ProdutoNaoEcontradoException;
 
     void abasteceEstoqueProduto(String codigo, int unidadeAtualizada)throws ProdutoNaoEcontradoException;
 

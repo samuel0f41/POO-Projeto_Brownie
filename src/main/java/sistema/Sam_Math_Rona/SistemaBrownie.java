@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class SistemaProduto implements Sistema_Divino_Brownie{
+public class SistemaBrownie implements Sistema_Divino_Brownie{
 
     int ultimoCodigo = 10000000;
     private Map<Integer, Pedido> pedidos;
@@ -15,7 +15,7 @@ public class SistemaProduto implements Sistema_Divino_Brownie{
     private double dispesaMateriasGastos;
     private LocalDate dataLucros;
 
-    public SistemaProduto(double dispesaMateriasGastos) {
+    public SistemaBrownie(double dispesaMateriasGastos) {
         this.pedidos = new HashMap<>();
         this.produtos = new HashMap<>();
         this.dispesaMateriasGastos = dispesaMateriasGastos;
@@ -23,12 +23,21 @@ public class SistemaProduto implements Sistema_Divino_Brownie{
 
     @Override
     public List<Produto> getListarProdutos() {
-        return null;
+        List<Produto> lista = new LinkedList<>();
+        for(Produto p: this.produtos.values()){
+            lista.add(p);
+        }
+        return lista;
     }
 
     @Override
     public List<Pedido> getListarPedidos() {
-        return null;
+        List<Pedido> lista = new LinkedList<>();
+
+        for(Pedido p: pedidos.values()){
+            lista.add(p);
+        }
+        return lista;
     }
 
     @Override
@@ -36,12 +45,14 @@ public class SistemaProduto implements Sistema_Divino_Brownie{
         ultimoCodigo++;
         int codigo = ultimoCodigo;
 
+        Pedido pedido = new Pedido();
+        pedido.setCodigoDoPedido(ultimoCodigo);
+
         if(pedidos.containsKey(codigo)){
             throw new PedidoJaComCodigoJaExiste("Pedido com mesmo codigo, " +
                     "precisa ajeitar numeração dos pedidos");
         }
-        Pedido pedido = new Pedido();
-        pedido.setCodigoDoPedido(ultimoCodigo);
+
         pedido.setCliente(cliente);
         pedido.setItensPedidos(itensPedidos);
         pedido.setValorTotalpedidos(pedido.getValorTotalpedidos());
@@ -62,6 +73,16 @@ public class SistemaProduto implements Sistema_Divino_Brownie{
         }
         return lista;
 
+    }
+
+    @Override
+    public void cancelarPedido(int codigo) throws NaoExistePedidoException {
+
+        if(pedidos.containsKey(codigo)){
+            pedidos.remove(codigo);
+        }else{
+            throw new NaoExistePedidoException("Pedido nao encontrado com esse codigo: "+codigo);
+        }
     }
 
     @Override
@@ -89,6 +110,15 @@ public class SistemaProduto implements Sistema_Divino_Brownie{
     }
 
     @Override
+        public void removerProduto(String codigo) throws ProdutoNaoEcontradoException {
+            if(produtos.containsKey(codigo)) {
+                produtos.remove(codigo);
+            }else{
+                throw new ProdutoNaoEcontradoException("Produto nao encontrado com esse codigo!" + codigo);
+            }
+        }
+
+    @Override
     public void abasteceEstoqueProduto(String codigo, int unidadeAtualizada)throws ProdutoNaoEcontradoException{
         Produto produto = produtos.get(codigo);
 
@@ -97,6 +127,15 @@ public class SistemaProduto implements Sistema_Divino_Brownie{
         }
         throw new ProdutoNaoEcontradoException("Produto Nao encontrado, estoque nao atualizado!");
 
+    }
+
+    public int quantidadeNoEstoque(String codigo)throws ProdutoNaoEcontradoException{
+        if(produtos.containsKey(codigo)){
+            Produto p = produtos.get(codigo);
+            return p.getQtEstoque();
+        }else {
+            throw new ProdutoNaoEcontradoException("Produto nao encontrado com codigo: "+codigo);
+        }
     }
 
     @Override

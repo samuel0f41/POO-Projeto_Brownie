@@ -14,14 +14,13 @@ public class Pedido {
 
 
 
-    public Pedido( int codigoDoPedido ,Cliente cliente, List<ItensPedidos> itensPedidos) {
-        this.codigoDoPedido = codigoDoPedido;
+    public Pedido(Cliente cliente, List<ItensPedidos> itensPedidos) {
         this.cliente = cliente;
         this.itensPedidos = itensPedidos;
-        this.estadoPedido = EstadoPedido.PENDENTE;
+
     }
     public Pedido(){
-        valorTotalpedidos = getValorTotalpedidos();
+
     }
 
     public EstadoPedido getEstadoPedido() {

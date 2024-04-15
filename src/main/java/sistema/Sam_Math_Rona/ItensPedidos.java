@@ -10,6 +10,9 @@ public class ItensPedidos {
         this.quantidade = quantidade;
         this.precoUnitario = this.produto.getPreco();
     }
+    public ItensPedidos(){
+        this.quantidade = 1;
+    }
     public double getPrecoUnitario() {
         return precoUnitario;
     }
@@ -20,10 +23,6 @@ public class ItensPedidos {
 
     public double getPrecoTotal(){
         return this.quantidade * this.precoUnitario;
-    }
-
-    public ItensPedidos(){
-        this.quantidade = 1;
     }
 
     public Produto getProduto() {
