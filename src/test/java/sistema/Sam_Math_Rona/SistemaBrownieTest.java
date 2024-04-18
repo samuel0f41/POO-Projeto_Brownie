@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class SistemaBrownieTest {
     SistemaBrownie sistema = new SistemaBrownie(1000);
 
-    @Test
+    @TesT
     public void testaCadastrarProduto_E_VerQuantidadeNoEstoque() throws ProdutoJaExisteException, ProdutoNaoEcontradoException {
         Produto p1 = new Produto("Brownie de Ninho", Tipo.BROWNIE, Sabores.NINHO, 10, 5.00,"0001");
         assertEquals(0, sistema.getListarProdutos().size());

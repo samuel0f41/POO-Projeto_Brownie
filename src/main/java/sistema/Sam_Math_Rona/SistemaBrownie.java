@@ -2,166 +2,133 @@ package sistema.Sam_Math_Rona;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.Year;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class SistemaBrownie implements Sistema_Divino_Brownie{
+public class SistemaBrownie implements SistemaDivinoBrownie {
 
-    int ultimoCodigo = 10000000;
     private Map<Integer, Pedido> pedidos;
-    private Map<String, Produto> produtos;
+    private List<Produto> produtos;
     private double dispesaMateriasGastos;
     private LocalDate dataLucros;
 
     public SistemaBrownie(double dispesaMateriasGastos) {
         this.pedidos = new HashMap<>();
-        this.produtos = new HashMap<>();
+        this.produtos = new LinkedList<>();
         this.dispesaMateriasGastos = dispesaMateriasGastos;
     }
-
     @Override
-    public List<Produto> getListarProdutos() {
-        List<Produto> lista = new LinkedList<>();
-        for(Produto p: this.produtos.values()){
-            lista.add(p);
-        }
-        return lista;
+    public List<Produto> listaDeProdutos(){
+        return this.produtos;
     }
 
     @Override
-    public List<Pedido> getListarPedidos() {
+    public List<Pedido> listaDeTodosPedidos() {
         List<Pedido> lista = new LinkedList<>();
-
         for(Pedido p: pedidos.values()){
             lista.add(p);
         }
         return lista;
     }
-
     @Override
-    public String vendaRealizarPedido(Cliente cliente, List<ItensPedidos> itensPedidos) throws PedidoJaComCodigoJaExiste {
-        ultimoCodigo++;
-        int codigo = ultimoCodigo;
-
-        Pedido pedido = new Pedido();
-        pedido.setCodigoDoPedido(ultimoCodigo);
-
-        if(pedidos.containsKey(codigo)){
-            throw new PedidoJaComCodigoJaExiste("Pedido com mesmo codigo, " +
-                    "precisa ajeitar numeração dos pedidos");
-        }
-
-        pedido.setCliente(cliente);
-        pedido.setItensPedidos(itensPedidos);
-        pedido.setValorTotalpedidos(pedido.getValorTotalpedidos());
-        pedido.setEstadoPedido(EstadoPedido.PENDENTE);
-
-        pedidos.put(codigo, pedido);
-        return "Pedido realizado!\nCodigo do pedido: "+ codigo + "\n\nCliente: "+cliente.getNome();
-    }
-
-    @Override
-    public List<Pedido> pedidosFaltaConcluir() {
+    public List<Pedido> listaDePedidosPendentes() {
         List<Pedido> lista = new LinkedList<>();
-
         for(Pedido p: pedidos.values()){
             if(p.getEstadoPedido() == EstadoPedido.PENDENTE){
                 lista.add(p);
             }
         }
         return lista;
-
     }
-
     @Override
-    public void cancelarPedido(int codigo) throws NaoExistePedidoException {
-
+    public void cadastrarPedido(Pedido pedido){
+        pedidos.put(pedido.getCodigo(), pedido);
+    }
+    @Override
+    public void cancelarPedido(int codigo) throws PedidoNaoExisteException {
         if(pedidos.containsKey(codigo)){
             pedidos.remove(codigo);
         }else{
-            throw new NaoExistePedidoException("Pedido nao encontrado com esse codigo: "+codigo);
+            throw new PedidoNaoExisteException("Pedido nao encontrado com esse codigo: "+codigo);
         }
     }
 
     @Override
-    public String finalizarVenda(int codigoPedido)throws NaoExistePedidoException {
-        // Perguntar a professora se precisa necessita dessa exceção
-        if(pedidos.containsKey(codigoPedido)){
-            Pedido pedido = pedidos.get(codigoPedido);
-
+    public void finalizarPedido(int codigo)throws PedidoNaoExisteException {
+        if(pedidos.containsKey(codigo)){
+            Pedido pedido = pedidos.get(codigo);
             pedido.setEstadoPedido(EstadoPedido.FINALIZADO);
-            pedidos.put(pedido.getCodigoDoPedido(), pedido);
-            return "Pedido Finalizado";
+            pedidos.put(pedido.getCodigo(), pedido);
         }
-        return "Pedido Não encontrado tente colocar o codigo certo";
-        //throw new NaoExistePedidoException("Pedido não encontrado!");
-
+        throw new PedidoNaoExisteException("Pedido nao encontrado com esse codigo: "+codigo);
     }
-
-    public void cadastrarProduto(Produto produto) throws ProdutoJaExisteException{
-        if(produtos.containsKey(produto.getCodigo()) ){
-            throw new ProdutoJaExisteException("Produto ja foi cadastrado no sistema, tentar outro codigo");
-        }
-
-        produtos.put(produto.getCodigo(), produto);
-
-    }
-
     @Override
-        public void removerProduto(String codigo) throws ProdutoNaoEcontradoException {
-            if(produtos.containsKey(codigo)) {
-                produtos.remove(codigo);
-            }else{
-                throw new ProdutoNaoEcontradoException("Produto nao encontrado com esse codigo!" + codigo);
+    public void cadastrarProduto(Produto produto, int quantDeProduto)throws ProdutoJaExisteException{
+        for(Produto p : produtos){
+            if (p.equals(produto)) {
+                int quantAnterio = p.getQtEstoque();
+                int quantidadeAtual = quantAnterio + quantDeProduto;
+                p.setQtEstoque(quantidadeAtual);
             }
         }
-
+    }
     @Override
-    public void abasteceEstoqueProduto(String codigo, int unidadeAtualizada)throws ProdutoNaoEcontradoException{
-        Produto produto = produtos.get(codigo);
-
-        if(produtos.containsKey(codigo)){
-            produto.setQtEstoque(unidadeAtualizada);
+    public void removerProduto(Produto produto) throws ProdutoNaoExisteException {
+        for(Produto p: produtos){
+            if (p.equals(produto)) {
+                produtos.remove(produto);
+            }
         }
-        throw new ProdutoNaoEcontradoException("Produto Nao encontrado, estoque nao atualizado!");
-
+        throw new ProdutoNaoExisteException("Esse produto não existe no sistema");
     }
 
-    public int quantidadeNoEstoque(String codigo)throws ProdutoNaoEcontradoException{
-        if(produtos.containsKey(codigo)){
-            Produto p = produtos.get(codigo);
-            return p.getQtEstoque();
-        }else {
-            throw new ProdutoNaoEcontradoException("Produto nao encontrado com codigo: "+codigo);
+    @Override
+    public void abasteceEstoqueProduto(Tipo tipo, Sabores sabor, int quantidade)throws ProdutoNaoExisteException {
+        for(Produto p : produtos){
+            if(p.getTipo().equals(tipo) && p.getSabor().equals(sabor)){
+                int quantAnterior = p.getQtEstoque();
+                int quantNova = quantAnterior + quantidade;
+                p.setQtEstoque(quantNova);
+            }
         }
+        throw new ProdutoNaoExisteException("Esse produto não existe no sistema, estoque nao atualizado!");
+    }
+
+    public int quantidadeNoEstoque(Tipo tipo, Sabores sabor) throws ProdutoNaoExisteException {
+        for(Produto p : produtos){
+            if(p.getTipo().equals(tipo) && p.getSabor().equals(sabor)){
+                return p.getQtEstoque();
+            }
+        } throw new ProdutoNaoExisteException("Esse produto não existe no sistema");
     }
 
     @Override
-    public int quantidadeDeVendasMensal(List<Pedido> listaDePedidos, Month mes) {
+    public int quantidadeDeVendasMensal(Month mes) {
         return 0;
     }
 
     @Override
-    public int quantidadeDeVendasAnual(List<Pedido> listaDePedidos) {
+    public int quantidadeDeVendasAnual(Year ano) {
         return 0;
     }
 
     @Override
-    public double calculaLucroAnual(List<Pedido> listaDePedidos) {
+    public double calculaLucroAnual(Year ano) {
         return 0;
     }
 
     @Override
-    public double calculaLucroMensal(List<Pedido> listaDePedidos, Month mes) {
+    public double calculaLucroMensal(Month mes) {
         return 0;
     }
 
     public void setPedidos(Map<Integer, Pedido> pedidos) {
         this.pedidos = pedidos;
     }
-    public void setProdutos(Map<String, Produto> produtos) {
+    public void setProdutos(LinkedList<Produto> produtos) {
         this.produtos = produtos;
     }
     public double getDispesaMateriasGastos() {

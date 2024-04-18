@@ -5,85 +5,63 @@ import java.util.List;
 import java.util.Objects;
 
 public class Pedido {
-    private int codigoDoPedido;
+    private int codigo = 0;
     private Cliente cliente;
-    private List<ItensPedidos> itensPedidos;
-    private double valorTotalpedidos;
-    private EstadoPedido estadoPedido; // ex: pendente / em andamento(preparo) / finalizado(entregue)
+    private List<Produto> carrinho;
+    private double valorTotal;
+    private EstadoPedido estadoPedido;
     private LocalDateTime data = LocalDateTime.now();
 
-
-
-    public Pedido(Cliente cliente, List<ItensPedidos> itensPedidos) {
+    public Pedido(Cliente cliente, List<Produto> produtos) {
         this.cliente = cliente;
-        this.itensPedidos = itensPedidos;
-
+        this.carrinho = produtos;
+        this.codigo++;
     }
-    public Pedido(){
-
+    public int getCodigo() {
+        return codigo;
     }
-
+    public void setCodigo(int codigoDoPedido) {
+        this.codigo = codigoDoPedido;
+    }
+    public Cliente getCliente() {
+        return cliente;
+    }
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+    public List<Produto> getCarrinho() {
+        return this.carrinho;
+    }
+    public void setCarrinho(List<Produto> carrinho) {
+        this.carrinho = carrinho;
+    }
+    public double getValorTotal() {
+        double valorTotal = 0;
+        for(Produto p: this.carrinho){
+            valorTotal += p.getPreco();
+        }
+        return valorTotal;
+    }
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
     public EstadoPedido getEstadoPedido() {
         return estadoPedido;
     }
-
     public void setEstadoPedido(EstadoPedido estadoPedido) {
         this.estadoPedido = estadoPedido;
     }
-
-    public int getCodigoDoPedido() {
-        return codigoDoPedido;
-    }
-
-    public void setCodigoDoPedido(int codigoDoPedido) {
-        this.codigoDoPedido = codigoDoPedido;
-    }
-
     public LocalDateTime getData() {
         return data;
     }
-
     public void setData(LocalDateTime data) {
         this.data = data;
     }
 
-    public double getValorTotalpedidos() {
-        double totalDoPedido = 0.0;
-        for(ItensPedidos i: this.itensPedidos){
-            totalDoPedido += i.getPrecoTotal();
-        }
-        return totalDoPedido;
-    }
-
-    public void setValorTotalpedidos(double valorTotalpedidos) {
-        //nesse set poderia ser um setDesconto(double desconto)
-        this.valorTotalpedidos = valorTotalpedidos;
-    }
-
-    public void setLanches(List<ItensPedidos> itensPedidos) {
-        this.itensPedidos = itensPedidos;
-    }
-
     @Override
     public String toString() {
-        return "Pedido: "+ this.codigoDoPedido + "\nCliente:  " + this.cliente.getNome()+ "\nEndereço: " +
-                this.cliente.getEndereco()+ "\n" + this.itensPedidos + "\n Total a pagar" +this.valorTotalpedidos;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public List<ItensPedidos> getItensPedidos() {
-        return this.itensPedidos;
-    }
-
-    public void setItensPedidos(List<ItensPedidos> itensPedidos) {
-        this.itensPedidos = itensPedidos;
+        return "Pedido: "+ this.codigo + "\nCliente:  " + this.cliente.getNome()+ "\nEndereço: " +
+                this.cliente.getEndereco()+ "\n" + this.carrinho + "\n Total a pagar" +this.valorTotal;
     }
 
     @Override
@@ -91,12 +69,12 @@ public class Pedido {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pedido pedidos = (Pedido) o;
-        return Objects.equals(codigoDoPedido, pedidos.codigoDoPedido);
+        return Objects.equals(codigo, pedidos.codigo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(codigoDoPedido);
+        return Objects.hash(codigo);
     }
 
 

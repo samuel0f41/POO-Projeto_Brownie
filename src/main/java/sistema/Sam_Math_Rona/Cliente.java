@@ -10,7 +10,8 @@ public class Cliente {
         this.endereco = endereco;
         this.numeroCasa = numeroCasa;
     }
-    public Cliente(){
+    public Cliente(String nome){
+        this.nome = nome;
         this.endereco = "Retirada";
     }
 
