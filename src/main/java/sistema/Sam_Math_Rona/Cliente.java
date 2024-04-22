@@ -1,6 +1,8 @@
 package sistema.Sam_Math_Rona;
 
-public class Cliente {
+import java.io.Serializable;
+
+public class Cliente implements Serializable {
     private String nome;
     private String endereco;
     private String numeroCasa;

@@ -1,25 +1,41 @@
 package sistema.Sam_Math_Rona;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SistemaBrownie implements SistemaDivinoBrownie {
 
-    private Map<Integer, Pedido> pedidos;
     private List<Produto> produtos;
+    private Map<Integer, Pedido> pedidos;
     private double dispesaMateriasGastos;
     private LocalDate dataLucros;
+    GravadorProduto gravadorProdutos = new GravadorProduto();
+    GravadorPedidos gravadorPedidos = new GravadorPedidos();
 
-    public SistemaBrownie(double dispesaMateriasGastos) {
-        this.pedidos = new HashMap<>();
-        this.produtos = new LinkedList<>();
-        this.dispesaMateriasGastos = dispesaMateriasGastos;
+
+    public SistemaBrownie(){
+        try {
+            this.produtos = gravadorProdutos.leProdutos();
+            this.pedidos = gravadorPedidos.lePedidos();
+        }catch (IOException e){
+            System.err.println((e.getMessage()));
+            this.produtos = new LinkedList<>();
+            this.pedidos = new HashMap<>();
+        }
     }
+
+    public void salvarDados(){
+        try {
+            this.gravadorProdutos.gravaProduto(this.produtos);
+            this.gravadorPedidos.gravaPedidos(this.pedidos);
+        }catch (IOException e){
+            System.err.println(e.getMessage());
+        }
+    }
+
     @Override
     public List<Produto> listaDeProdutos(){
         return this.produtos;
@@ -45,13 +61,17 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
     }
     @Override
     public void cadastrarPedido(Pedido pedido) throws CodigoPedidoJaExiste{
+        int ultimoCodigo = GravadorCodigo.carregarUltimoCodigoPedido();
         if(pedidos.containsKey(pedido.getCodigo())){
             throw new CodigoPedidoJaExiste("Ja existe um pedido com esse codigo");
         }else{
+            pedido.setCodigo(ultimoCodigo + 1);
             pedidos.put(pedido.getCodigo(), pedido);
             System.out.println("Total a pagar: "+pedido.getValorTotal());
-        }
 
+            GravadorCodigo.salvarUltimoCodigoPedido(pedido.getCodigo());
+
+        }
     }
     @Override
     public void cancelarPedido(int codigo) throws PedidoNaoExisteException {
@@ -88,13 +108,12 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
 
     }
     @Override
-    public void removerProduto(Tipo tipo, Sabores sabor) throws ProdutoNaoExisteException {
+    public void removerProduto(Tipo tipo, Sabores sabor) {
         for(Produto p: produtos){
             if (p.getTipo() == tipo  && p.getSabor()== sabor) {
                 produtos.remove(p);
             }
         }
-        throw new ProdutoNaoExisteException("Esse produto não existe no sistema");
     }
 
     @Override

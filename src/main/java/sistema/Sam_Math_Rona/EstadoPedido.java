@@ -1,5 +1,7 @@
 package sistema.Sam_Math_Rona;
 
-public enum EstadoPedido {
+import java.io.Serializable;
+
+public enum EstadoPedido implements Serializable {
     PENDENTE, FINALIZADO
 }

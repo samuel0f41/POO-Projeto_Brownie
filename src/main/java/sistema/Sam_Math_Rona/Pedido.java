@@ -1,10 +1,11 @@
 package sistema.Sam_Math_Rona;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-public class Pedido {
+public class Pedido implements Serializable {
     private int codigo = 0;
     private Cliente cliente;
     private List<Produto> carrinho;
@@ -15,7 +16,6 @@ public class Pedido {
     public Pedido(Cliente cliente, List<Produto> produtos) {
         this.cliente = cliente;
         this.carrinho = produtos;
-        this.codigo++;
         this.estadoPedido = EstadoPedido.PENDENTE;
     }
     public int getCodigo() {

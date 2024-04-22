@@ -5,7 +5,7 @@ import java.awt.*;
 public class BrownieGerenciadorGui extends JFrame {
     JLabel linha1, linha2;
     ImageIcon brasileirao;
-    SistemaBrownie sistema = new SistemaBrownie(1);
+    SistemaBrownie sistema = new SistemaBrownie();
     JMenuBar barraMenu = new JMenuBar();
     public BrownieGerenciadorGui(){
 
@@ -41,10 +41,11 @@ public class BrownieGerenciadorGui extends JFrame {
         //botoes da interface
 
         JMenu menuCadastrar = new JMenu("Cadastrar");
-        JMenuItem menuCadastrarPedido = new JMenuItem("Pedido");
         JMenuItem menuCadastrarProduto = new JMenuItem("Produto");
-        menuCadastrar.add(menuCadastrarPedido);
+        JMenuItem menuCadastrarPedido = new JMenuItem("Pedido");
         menuCadastrar.add(menuCadastrarProduto);
+        menuCadastrar.add(menuCadastrarPedido);
+
 
         JMenu menuFinalizar = new JMenu("Finalizar");
         JMenuItem menuFinalizarPedido = new JMenuItem("Pedido");
@@ -52,7 +53,6 @@ public class BrownieGerenciadorGui extends JFrame {
 
         JMenu menuRemover = new JMenu("Remover");
         JMenuItem menuRemoverProduto = new JMenuItem("Produto");
-
         menuRemover.add(menuRemoverProduto);
 
         JMenu menuAltera = new JMenu("Alterar");
@@ -62,12 +62,14 @@ public class BrownieGerenciadorGui extends JFrame {
         JMenu menuListar = new JMenu("Listar");
         JMenuItem menuListarProdutos = new JMenuItem("Produtos");
         JMenuItem menuListarPedidos = new JMenuItem("Pedidos");
-        menuListar.add(menuListarProdutos, menuListarPedidos);
+        menuListar.add(menuListarProdutos);
+        menuListar.add(menuListarPedidos);
 
-        JMenu menuPedidosPendentes = new JMenu("Pedidos Pendentes");
+        JMenu menuPedidosPendentes = new JMenu("Area Pedidos");
         JMenuItem menuListarPedidosPendentes = new JMenuItem("Pedidos Pendentes");
         JMenuItem menuCancelarPedido = new JMenuItem("Cancelar Pedido");
-        menuPedidosPendentes.add(menuListarPedidosPendentes, menuCancelarPedido);
+        menuPedidosPendentes.add(menuListarPedidosPendentes);
+        menuPedidosPendentes.add(menuCancelarPedido);
 
         JMenu menuSalvar = new JMenu("Salvar");
         JMenuItem menuSalvarDados = new JMenuItem("Dados atuais");
@@ -88,12 +90,9 @@ public class BrownieGerenciadorGui extends JFrame {
         menuListarPedidosPendentes.addActionListener(new ListarPedidosPendentesController(sistema, this));
         menuCancelarPedido.addActionListener(new CancelarPedidoController(sistema, this));
 
-
-
-
-//        menuSalvarDados.addActionListener((ae) -> {
-//            sistema.salvarDados();
-//        });
+        menuSalvarDados.addActionListener((ae) -> {
+            sistema.salvarDados();
+        });
 
         barraMenu.add(menuCadastrar);
         barraMenu.add(menuFinalizar);
@@ -101,6 +100,8 @@ public class BrownieGerenciadorGui extends JFrame {
         barraMenu.add(menuAltera);
         barraMenu.add(menuListar);
         barraMenu.add(menuSalvar);
+        barraMenu.add(menuPedidosPendentes);
+
         setJMenuBar(barraMenu);
     }
 

@@ -1,8 +1,8 @@
 package sistema.Sam_Math_Rona;
 
-import java.util.Objects;
+import java.io.Serializable;
 
-public class Produto {
+public class Produto implements Serializable {
     private Tipo tipo;
     private Sabores sabor;
     private int qtEstoque;
@@ -55,12 +55,22 @@ public class Produto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Produto produto = (Produto) o;
-        return tipo == produto.tipo && sabor == produto.sabor;
+
+        if (tipo != produto.tipo) return false;
+        return sabor == produto.sabor;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tipo, sabor);
+        int result = tipo != null ? tipo.hashCode() : 0;
+        result = 31 * result + (sabor != null ? sabor.hashCode() : 0);
+        return result;
     }
+
+    public String toString(){
+        return  "Brownie de "+ this.sabor+ " Quantidade no estoque: "+ this.qtEstoque+ " Preço R$: "+ this.preco;
+    }
+
 }

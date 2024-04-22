@@ -1,5 +1,7 @@
 package sistema.Sam_Math_Rona;
 
-public enum Tipo {
+import java.io.Serializable;
+
+public enum Tipo implements Serializable {
     BROWNIE, INDEFINIDO
 }
