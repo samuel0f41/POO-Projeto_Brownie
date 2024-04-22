@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 public class BrownieGerenciadorGui extends JFrame {
     JLabel linha1, linha2;
-    ImageIcon brasileirao;
+    ImageIcon brownie;
     SistemaBrownie sistema = new SistemaBrownie();
     JMenuBar barraMenu = new JMenuBar();
     public BrownieGerenciadorGui(){
@@ -15,18 +15,18 @@ public class BrownieGerenciadorGui extends JFrame {
         setResizable(false);
         setBackground(Color.white);
 
-        brasileirao = new ImageIcon("./imgs/brownie1.jpeg");
+        brownie = new ImageIcon("./imgs/brownie1.png");
 
-        Image imagemOriginal = brasileirao.getImage();
+        Image imagemOriginal = brownie.getImage();
         Image imagemRedimensionada = imagemOriginal.getScaledInstance(875, 455, Image.SCALE_SMOOTH);
-        brasileirao = new ImageIcon(imagemRedimensionada);
+        brownie = new ImageIcon(imagemRedimensionada);
 
         linha1 = new JLabel("Divino Brownie", JLabel.CENTER);
         linha1.setForeground(Color.blue);
         linha1.setFont(new Font("Serif", Font.BOLD, 40));
         add(linha1, BorderLayout.NORTH);
 
-        linha2 = new JLabel(brasileirao, JLabel.CENTER);
+        linha2 = new JLabel(brownie, JLabel.CENTER);
         add(linha2, BorderLayout.CENTER);
         // Setando o fundo da linha2 como transparente para que a imagem de fundo do JFrame seja visível
         linha2.setOpaque(false);
