@@ -9,12 +9,12 @@ public interface SistemaDivinoBrownie {
     List<Pedido> listaDeTodosPedidos();
     List<Pedido> listaDePedidosPendentes();
 
-    void cadastrarPedido(Pedido pedido);
+    void cadastrarPedido(Pedido pedido) throws CodigoPedidoJaExiste;
     void cancelarPedido(int codigo) throws PedidoNaoExisteException;
     void finalizarPedido(int codigo) throws PedidoNaoExisteException;
 
     void cadastrarProduto(Produto produto,int quantDeProduto) throws ProdutoJaExisteException;
-    void removerProduto(Produto produto) throws ProdutoNaoExisteException;
+    void removerProduto(Tipo tipo, Sabores sabor) throws ProdutoNaoExisteException;
     void abasteceEstoqueProduto(Tipo tipo, Sabores sabor, int quantidade) throws ProdutoNaoExisteException;
 
     int quantidadeDeVendasMensal(Month mes);

@@ -16,6 +16,7 @@ public class Pedido {
         this.cliente = cliente;
         this.carrinho = produtos;
         this.codigo++;
+        this.estadoPedido = EstadoPedido.PENDENTE;
     }
     public int getCodigo() {
         return codigo;

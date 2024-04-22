@@ -44,8 +44,14 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
         return lista;
     }
     @Override
-    public void cadastrarPedido(Pedido pedido){
-        pedidos.put(pedido.getCodigo(), pedido);
+    public void cadastrarPedido(Pedido pedido) throws CodigoPedidoJaExiste{
+        if(pedidos.containsKey(pedido.getCodigo())){
+            throw new CodigoPedidoJaExiste("Ja existe um pedido com esse codigo");
+        }else{
+            pedidos.put(pedido.getCodigo(), pedido);
+            System.out.println("Total a pagar: "+pedido.getValorTotal());
+        }
+
     }
     @Override
     public void cancelarPedido(int codigo) throws PedidoNaoExisteException {
@@ -68,18 +74,24 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
     @Override
     public void cadastrarProduto(Produto produto, int quantDeProduto)throws ProdutoJaExisteException{
         for(Produto p : produtos){
-            if (p.equals(produto)) {
-                int quantAnterio = p.getQtEstoque();
-                int quantidadeAtual = quantAnterio + quantDeProduto;
-                p.setQtEstoque(quantidadeAtual);
+            if(p.getSabor() == produto.getSabor() && p.getTipo() == produto.getTipo()){
+                throw new ProdutoJaExisteException("Esse produto ja foi cadastrado, tente outro!");
             }
+//            if (p.equals(produto)) {
+//                int quantAnterio = p.getQtEstoque();
+//                int quantidadeAtual = quantAnterio + quantDeProduto;
+//                p.setQtEstoque(quantidadeAtual);
+//            }
         }
+
+        produtos.add(produto);
+
     }
     @Override
-    public void removerProduto(Produto produto) throws ProdutoNaoExisteException {
+    public void removerProduto(Tipo tipo, Sabores sabor) throws ProdutoNaoExisteException {
         for(Produto p: produtos){
-            if (p.equals(produto)) {
-                produtos.remove(produto);
+            if (p.getTipo() == tipo  && p.getSabor()== sabor) {
+                produtos.remove(p);
             }
         }
         throw new ProdutoNaoExisteException("Esse produto não existe no sistema");
@@ -103,6 +115,50 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
                 return p.getQtEstoque();
             }
         } throw new ProdutoNaoExisteException("Esse produto não existe no sistema");
+    }
+
+    public Produto procurarProduto(String sabor)throws ProdutoNaoExisteException{
+        //Legenda 1-Brigadeiro 2-Ninho 3-Dois_Amores 4-NinhoC/Nutela 5- Doce_de_Leite
+        Produto brownie = null;
+        if(sabor.equals("1")) {
+            for(Produto b: produtos){
+                if(b.getSabor() == Sabores.BRIGADEIRO){
+                    brownie = b;
+                }
+            }
+        }
+        else if (sabor.equals("2")) {
+            for(Produto b: produtos){
+                if(b.getSabor() == Sabores.NINHO){
+                    brownie = b;
+                }
+            }
+        }
+        else if (sabor.equals("3")) {
+            for(Produto b: produtos){
+                if(b.getSabor() == Sabores.DOIS_AMORES){
+                    brownie = b;
+                }
+            }
+        }
+        else if (sabor.equals("4")) {
+            for(Produto b: produtos){
+                if(b.getSabor() == Sabores.NINHO_C_NUTELLA){
+                    brownie = b;
+                }
+            }
+        }
+        else if(sabor.equals("5")){
+            for(Produto b: produtos){
+                if(b.getSabor() == Sabores.DOCE_DE_LEITE){
+                    brownie = b;
+                }
+            }
+        }
+        if(brownie == null){
+            throw new ProdutoNaoExisteException("Esse produto não existe no sistema, estoque nao atualizado!");
+        }
+        return brownie;
     }
 
     @Override
