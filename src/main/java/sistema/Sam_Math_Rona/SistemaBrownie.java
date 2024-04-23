@@ -1,5 +1,6 @@
 package sistema.Sam_Math_Rona;
 
+import javax.swing.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.Month;
@@ -62,16 +63,15 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
     @Override
     public void cadastrarPedido(Pedido pedido) throws CodigoPedidoJaExiste{
         int ultimoCodigo = GravadorCodigo.carregarUltimoCodigoPedido();
+        pedido.setCodigo(ultimoCodigo+1);
         if(pedidos.containsKey(pedido.getCodigo())){
             throw new CodigoPedidoJaExiste("Ja existe um pedido com esse codigo");
         }else{
-            pedido.setCodigo(ultimoCodigo + 1);
             pedidos.put(pedido.getCodigo(), pedido);
-            System.out.println("Total a pagar: "+pedido.getValorTotal());
-
             GravadorCodigo.salvarUltimoCodigoPedido(pedido.getCodigo());
 
         }
+        JOptionPane.showMessageDialog(null,"Total a pagar: "+pedido.getValorTotal());
     }
     @Override
     public void cancelarPedido(int codigo) throws PedidoNaoExisteException {
