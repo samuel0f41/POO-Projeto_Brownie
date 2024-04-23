@@ -15,14 +15,14 @@ public class BrownieGerenciadorGui extends JFrame {
         setResizable(false);
         setBackground(Color.white);
 
-        brownie = new ImageIcon("./imgs/brownie1.png");
+        brownie = new ImageIcon("./imgs/brownie1.jpeg");
 
         Image imagemOriginal = brownie.getImage();
         Image imagemRedimensionada = imagemOriginal.getScaledInstance(875, 455, Image.SCALE_SMOOTH);
         brownie = new ImageIcon(imagemRedimensionada);
 
         linha1 = new JLabel("Divino Brownie", JLabel.CENTER);
-        linha1.setForeground(Color.blue);
+        linha1.setForeground(Color.black);
         linha1.setFont(new Font("Serif", Font.BOLD, 40));
         add(linha1, BorderLayout.NORTH);
 

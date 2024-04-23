@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Pedido implements Serializable {
-    private int codigo = 0;
+    private int codigo;
     private Cliente cliente;
     private List<Produto> carrinho;
     private double valorTotal;
@@ -39,7 +39,7 @@ public class Pedido implements Serializable {
     public double getValorTotal() {
         double valorTotal = 0;
         for(Produto p: this.carrinho){
-            valorTotal += p.getPreco();
+            this.valorTotal += p.getPreco();
         }
         return valorTotal;
     }

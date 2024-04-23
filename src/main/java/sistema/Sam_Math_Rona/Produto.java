@@ -70,7 +70,7 @@ public class Produto implements Serializable {
     }
 
     public String toString(){
-        return  "Brownie de "+ this.sabor+ " Quantidade no estoque: "+ this.qtEstoque+ " Preço R$: "+ this.preco;
+        return  "Brownie de "+ this.sabor+ " Quantidade no estoque: "+ this.qtEstoque+ " Preço R$: "+ this.preco+"\n";
     }
 
 }
