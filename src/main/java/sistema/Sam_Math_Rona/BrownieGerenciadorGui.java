@@ -58,7 +58,9 @@ public class BrownieGerenciadorGui extends JFrame {
 
         JMenu menuAtualizar = new JMenu("Atualizar");
         JMenuItem menuAlteraQuantidadeEstoque = new JMenuItem("Estoque do produto");
+        JMenuItem menuVer = new JMenuItem("Ver quantidade no estoque");
         menuAtualizar.add(menuAlteraQuantidadeEstoque);
+        menuAtualizar.add(menuVer);
 
         JMenu menuListar = new JMenu("Listar");
         JMenuItem menuListarProdutos = new JMenuItem("Produtos");
@@ -93,6 +95,19 @@ public class BrownieGerenciadorGui extends JFrame {
         menuCadastrarProduto.addActionListener(new CadastraProdutoController(sistema, this));
         menuRemoverProduto.addActionListener(new RemoveProdutoController(sistema, this));
         menuAlteraQuantidadeEstoque.addActionListener(new AtualizaQuantidadeBrownieController(sistema, this));
+        menuVer.addActionListener((ae)->{
+            String sabor = JOptionPane.showInputDialog("Qual sabor do Brownie: \n"+
+                    "\nBrigadeiro [1] ou Ninho [2] \nDois Amores [3] " +
+                    "ou Ninho com nutella[4] \nDoce de Leite[5]");
+
+            try {
+                Produto p = sistema.procurarProduto(sabor);
+                JOptionPane.showMessageDialog(null, "Quantidade no estoque: "+ p.getQtEstoque());
+
+            } catch (ProdutoNaoExisteException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         menuListarPedidos.addActionListener(new ListarPedidosController(sistema, this));
         menuListarProdutos.addActionListener(new ListarProdutosController(sistema, this));
@@ -103,7 +118,6 @@ public class BrownieGerenciadorGui extends JFrame {
         menuSalvarDados.addActionListener((ae) -> {
             sistema.salvarDados();
         });
-
 
 
         barraMenu.add(menuCadastrar);

@@ -16,6 +16,7 @@ public interface SistemaDivinoBrownie {
     void cadastrarProduto(Produto produto) throws ProdutoJaExisteException;
     void removerProduto(Tipo tipo, Sabores sabor);
     void abasteceEstoqueProduto(Tipo tipo, Sabores sabor, int quantidade) throws ProdutoNaoExisteException;
+    public int quantidadeNoEstoque(Tipo tipo, Sabores sabor) throws ProdutoNaoExisteException;
 
     int quantidadeDeVendasMensal(Month mes);
     int quantidadeDeVendasAnual(Year ano);

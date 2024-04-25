@@ -8,11 +8,9 @@ import java.time.Year;
 import java.util.*;
 
 public class SistemaBrownie implements SistemaDivinoBrownie {
-
     private List<Produto> produtos;
     private Map<Integer, Pedido> pedidos;
     private Map<Integer, Pedido> pedidosPendentes = new HashMap<>();
-    private double dispesaMateriasGastos;
     private LocalDate dataLucros;
     GravadorProduto gravadorProdutos = new GravadorProduto();
     GravadorPedidos gravadorPedidos = new GravadorPedidos();
@@ -73,15 +71,27 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
     }
     @Override
     public void cadastrarPedido(Pedido pedido) throws CodigoPedidoJaExiste{
-        int ultimoCodigo = GravadorCodigo.carregarUltimoCodigoPedido();
-        pedido.setCodigo(ultimoCodigo++);
+        //achar ultimo codigo pecorrendo o ultimo maior da lista de pedidos finalizados e pedidos pendentes
+        int codigoPedidosPendentes = 0;
+        int codigoPedidosFinalizados = 0;
+        int codigoAtual = 0;
+        for(Pedido p1: pedidosPendentes.values()){
+            if (p1.getCodigo() >= codigoPedidosPendentes) codigoPedidosPendentes = p1.getCodigo();
+        }
+        for(Pedido p2: pedidos.values()){
+            if (p2.getCodigo() >= codigoPedidosFinalizados) codigoPedidosFinalizados = p2.getCodigo();
+        }
+        if(codigoPedidosFinalizados > codigoPedidosPendentes) codigoAtual = codigoPedidosFinalizados+1;
+        else codigoAtual = codigoPedidosPendentes+1;
+
+        pedido.setCodigo(codigoAtual);
         pedido.setEstadoPedido(EstadoPedido.PENDENTE);
         if(this.pedidosPendentes.containsKey(pedido.getCodigo()) || this.pedidos.containsKey(pedido.getCodigo())){
                 throw new CodigoPedidoJaExiste("Ja existe um pedido com esse codigo");
 
         }else{
             this.pedidosPendentes.put(pedido.getCodigo(), pedido);
-            GravadorCodigo.salvarUltimoCodigoPedido(ultimoCodigo);
+
         }
 
     }
@@ -215,11 +225,5 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
     }
     public void setProdutos(LinkedList<Produto> produtos) {
         this.produtos = produtos;
-    }
-    public double getDispesaMateriasGastos() {
-        return dispesaMateriasGastos;
-    }
-    public void setDispesaMateriasGastos(double dispesaMateriasGastos) {
-        this.dispesaMateriasGastos = dispesaMateriasGastos;
     }
 }
