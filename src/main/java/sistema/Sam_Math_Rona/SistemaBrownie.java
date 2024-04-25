@@ -11,20 +11,26 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
 
     private List<Produto> produtos;
     private Map<Integer, Pedido> pedidos;
+    private Map<Integer, Pedido> pedidosPendentes = new HashMap<>();
     private double dispesaMateriasGastos;
     private LocalDate dataLucros;
     GravadorProduto gravadorProdutos = new GravadorProduto();
     GravadorPedidos gravadorPedidos = new GravadorPedidos();
+    GravadorPedidosPendentes gravadorPedidosPendentes = new GravadorPedidosPendentes();
 
 
     public SistemaBrownie(){
         try {
             this.produtos = gravadorProdutos.leProdutos();
             this.pedidos = gravadorPedidos.lePedidos();
+            this.pedidos = gravadorPedidosPendentes.lePedidosPendentes();
+            JOptionPane.showMessageDialog(null, "Dados recuperados: \nProdutos cadastrados \nLista de Pedidos Pendentes\nLista de Pedidos concluidos");
         }catch (IOException e){
             System.err.println((e.getMessage()));
             this.produtos = new LinkedList<>();
             this.pedidos = new HashMap<>();
+            this.pedidosPendentes = new HashMap<>();
+
         }
     }
 
@@ -32,6 +38,7 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
         try {
             this.gravadorProdutos.gravaProduto(this.produtos);
             this.gravadorPedidos.gravaPedidos(this.pedidos);
+            this.gravadorPedidosPendentes.gravaPedidosPendentes(this.pedidosPendentes);
         }catch (IOException e){
             System.err.println(e.getMessage());
         }
@@ -53,25 +60,24 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
     @Override
     public List<Pedido> listaDePedidosPendentes() {
         List<Pedido> lista = new LinkedList<>();
-        for(Pedido p: pedidos.values()){
-            if(p.getEstadoPedido() == EstadoPedido.PENDENTE){
-                lista.add(p);
-            }
+        for(Pedido p: pedidosPendentes.values()){
+            lista.add(p);
         }
         return lista;
     }
     @Override
     public void cadastrarPedido(Pedido pedido) throws CodigoPedidoJaExiste{
         int ultimoCodigo = GravadorCodigo.carregarUltimoCodigoPedido();
-        pedido.setCodigo(ultimoCodigo+1);
-        if(pedidos.containsKey(pedido.getCodigo())){
-            throw new CodigoPedidoJaExiste("Ja existe um pedido com esse codigo");
-        }else{
-            pedidos.put(pedido.getCodigo(), pedido);
-            GravadorCodigo.salvarUltimoCodigoPedido(pedido.getCodigo());
+        pedido.setCodigo(ultimoCodigo++);
+        pedido.setEstadoPedido(EstadoPedido.PENDENTE);
+        if(this.pedidosPendentes.containsKey(pedido.getCodigo()) || this.pedidos.containsKey(pedido.getCodigo())){
+                throw new CodigoPedidoJaExiste("Ja existe um pedido com esse codigo");
 
+        }else{
+            this.pedidosPendentes.put(pedido.getCodigo(), pedido);
+            GravadorCodigo.salvarUltimoCodigoPedido(ultimoCodigo);
         }
-        JOptionPane.showMessageDialog(null,"Total a pagar: "+pedido.getValorTotal());
+
     }
     @Override
     public void cancelarPedido(int codigo) throws PedidoNaoExisteException {
@@ -84,12 +90,15 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
 
     @Override
     public void finalizarPedido(int codigo)throws PedidoNaoExisteException {
-        if(pedidos.containsKey(codigo)){
-            Pedido pedido = pedidos.get(codigo);
+        if(pedidosPendentes.containsKey(codigo)){
+            Pedido pedido = pedidosPendentes.get(codigo);
             pedido.setEstadoPedido(EstadoPedido.FINALIZADO);
             pedidos.put(pedido.getCodigo(), pedido);
+            pedidosPendentes.remove(pedido.getCodigo());
+        }else{
+            throw new PedidoNaoExisteException("Pedido nao encontrado com esse codigo: "+codigo);
         }
-        throw new PedidoNaoExisteException("Pedido nao encontrado com esse codigo: "+codigo);
+
     }
     @Override
     public void cadastrarProduto(Produto produto, int quantDeProduto)throws ProdutoJaExisteException{
@@ -97,11 +106,6 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
             if(p.getSabor() == produto.getSabor() && p.getTipo() == produto.getTipo()){
                 throw new ProdutoJaExisteException("Esse produto ja foi cadastrado, tente outro!");
             }
-//            if (p.equals(produto)) {
-//                int quantAnterio = p.getQtEstoque();
-//                int quantidadeAtual = quantAnterio + quantDeProduto;
-//                p.setQtEstoque(quantidadeAtual);
-//            }
         }
 
         produtos.add(produto);

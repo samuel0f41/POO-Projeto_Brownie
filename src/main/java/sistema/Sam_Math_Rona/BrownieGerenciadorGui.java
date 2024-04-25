@@ -46,7 +46,6 @@ public class BrownieGerenciadorGui extends JFrame {
         menuCadastrar.add(menuCadastrarProduto);
         menuCadastrar.add(menuCadastrarPedido);
 
-
         JMenu menuFinalizar = new JMenu("Finalizar");
         JMenuItem menuFinalizarPedido = new JMenuItem("Pedido");
         menuFinalizar.add(menuFinalizarPedido);
@@ -55,9 +54,9 @@ public class BrownieGerenciadorGui extends JFrame {
         JMenuItem menuRemoverProduto = new JMenuItem("Produto");
         menuRemover.add(menuRemoverProduto);
 
-        JMenu menuAltera = new JMenu("Alterar");
-        JMenuItem menuAlteraQuantidadeEstoque = new JMenuItem("Quantidade no estoque");
-        menuAltera.add(menuAlteraQuantidadeEstoque);
+        JMenu menuAtualizar = new JMenu("Atualizar");
+        JMenuItem menuAlteraQuantidadeEstoque = new JMenuItem("Estoque do produto");
+        menuAtualizar.add(menuAlteraQuantidadeEstoque);
 
         JMenu menuListar = new JMenu("Listar");
         JMenuItem menuListarProdutos = new JMenuItem("Produtos");
@@ -65,7 +64,7 @@ public class BrownieGerenciadorGui extends JFrame {
         menuListar.add(menuListarProdutos);
         menuListar.add(menuListarPedidos);
 
-        JMenu menuPedidosPendentes = new JMenu("Area Pedidos");
+        JMenu menuPedidosPendentes = new JMenu("Pendentes / Cancelar");
         JMenuItem menuListarPedidosPendentes = new JMenuItem("Pedidos Pendentes");
         JMenuItem menuCancelarPedido = new JMenuItem("Cancelar Pedido");
         menuPedidosPendentes.add(menuListarPedidosPendentes);
@@ -96,11 +95,12 @@ public class BrownieGerenciadorGui extends JFrame {
 
         barraMenu.add(menuCadastrar);
         barraMenu.add(menuFinalizar);
+        barraMenu.add(menuPedidosPendentes);
+        barraMenu.add(menuAtualizar);
         barraMenu.add(menuRemover);
-        barraMenu.add(menuAltera);
         barraMenu.add(menuListar);
         barraMenu.add(menuSalvar);
-        barraMenu.add(menuPedidosPendentes);
+
 
         setJMenuBar(barraMenu);
     }
@@ -109,6 +109,7 @@ public class BrownieGerenciadorGui extends JFrame {
         JFrame janela = new BrownieGerenciadorGui();
         janela.setVisible(true);
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 
 

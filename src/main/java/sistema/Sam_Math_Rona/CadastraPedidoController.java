@@ -45,7 +45,7 @@ public class CadastraPedidoController implements ActionListener {
         Pedido pedido = new Pedido(c1, carrinho);
         try {
             sistema.cadastrarPedido(pedido);
-            JOptionPane.showMessageDialog(janelaPrincipal, "Pedido Realizado!");
+            JOptionPane.showMessageDialog(janelaPrincipal, "Pedido Realizado!\n Total a pagar: "+ pedido.getValorTotal());
 
         } catch (CodigoPedidoJaExiste ex) {
             throw new RuntimeException(ex);

@@ -18,6 +18,16 @@ public class Pedido implements Serializable {
         this.carrinho = produtos;
         this.estadoPedido = EstadoPedido.PENDENTE;
     }
+
+    public double getValorTotal() {
+        for(Produto p: this.carrinho){
+            this.valorTotal += p.getPreco();
+        }
+        return valorTotal;
+    }
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
     public int getCodigo() {
         return codigo;
     }
@@ -36,16 +46,7 @@ public class Pedido implements Serializable {
     public void setCarrinho(List<Produto> carrinho) {
         this.carrinho = carrinho;
     }
-    public double getValorTotal() {
-        double valorTotal = 0;
-        for(Produto p: this.carrinho){
-            this.valorTotal += p.getPreco();
-        }
-        return valorTotal;
-    }
-    public void setValorTotal(double valorTotal) {
-        this.valorTotal = valorTotal;
-    }
+
     public EstadoPedido getEstadoPedido() {
         return estadoPedido;
     }
@@ -61,7 +62,7 @@ public class Pedido implements Serializable {
 
     @Override
     public String toString() {
-        return "Pedido: "+ this.codigo + "\nCliente:  " + this.cliente.getNome()+ "\nEndereço: " +
+        return "Pedido: "+ this.codigo +  " Estado do pedido: "+ this.estadoPedido+" Data "+ this.data + "\nCliente:  " +this.cliente.getNome()+ "\nEndereço: " +
                 this.cliente.getEndereco()+ "\n" + this.carrinho + "\n Total a pagar" +this.valorTotal;
     }
 
@@ -69,14 +70,14 @@ public class Pedido implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Pedido pedidos = (Pedido) o;
-        return Objects.equals(codigo, pedidos.codigo);
+
+        Pedido pedido = (Pedido) o;
+
+        return codigo == pedido.codigo;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(codigo);
+        return codigo;
     }
-
-
 }
