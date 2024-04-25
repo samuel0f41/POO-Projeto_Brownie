@@ -13,7 +13,7 @@ public interface SistemaDivinoBrownie {
     void cancelarPedido(int codigo) throws PedidoNaoExisteException;
     void finalizarPedido(int codigo) throws PedidoNaoExisteException;
 
-    void cadastrarProduto(Produto produto,int quantDeProduto) throws ProdutoJaExisteException;
+    void cadastrarProduto(Produto produto) throws ProdutoJaExisteException;
     void removerProduto(Tipo tipo, Sabores sabor);
     void abasteceEstoqueProduto(Tipo tipo, Sabores sabor, int quantidade) throws ProdutoNaoExisteException;
 

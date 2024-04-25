@@ -16,7 +16,7 @@ public class Produto implements Serializable {
     }
     public Produto(){
         this.qtEstoque = 0;
-        this.sabor = Sabores.UNICO;
+        this.sabor = Sabores.TEST;
         this.tipo = Tipo.INDEFINIDO;
     }
     public Tipo getTipo() {

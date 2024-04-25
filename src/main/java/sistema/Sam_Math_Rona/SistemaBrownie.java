@@ -23,7 +23,7 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
         try {
             this.produtos = gravadorProdutos.leProdutos();
             this.pedidos = gravadorPedidos.lePedidos();
-            this.pedidos = gravadorPedidosPendentes.lePedidosPendentes();
+            this.pedidosPendentes = gravadorPedidosPendentes.lePedidosPendentes();
             JOptionPane.showMessageDialog(null, "Dados recuperados: \nProdutos cadastrados \nLista de Pedidos Pendentes\nLista de Pedidos concluidos");
         }catch (IOException e){
             System.err.println((e.getMessage()));
@@ -65,6 +65,12 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
         }
         return lista;
     }
+    public void removerPedidoFinalizado(int codigo) throws PedidoNaoExisteException{
+        if(pedidos.containsKey(codigo)) pedidos.remove(codigo);
+        else{
+            throw new PedidoNaoExisteException("Esse pedido nao existe, tente outro codigo");
+        }
+    }
     @Override
     public void cadastrarPedido(Pedido pedido) throws CodigoPedidoJaExiste{
         int ultimoCodigo = GravadorCodigo.carregarUltimoCodigoPedido();
@@ -81,8 +87,8 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
     }
     @Override
     public void cancelarPedido(int codigo) throws PedidoNaoExisteException {
-        if(pedidos.containsKey(codigo)){
-            pedidos.remove(codigo);
+        if(pedidosPendentes.containsKey(codigo)){
+            pedidosPendentes.remove(codigo);
         }else{
             throw new PedidoNaoExisteException("Pedido nao encontrado com esse codigo: "+codigo);
         }
@@ -101,7 +107,7 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
 
     }
     @Override
-    public void cadastrarProduto(Produto produto, int quantDeProduto)throws ProdutoJaExisteException{
+    public void cadastrarProduto(Produto produto)throws ProdutoJaExisteException{
         for(Produto p : produtos){
             if(p.getSabor() == produto.getSabor() && p.getTipo() == produto.getTipo()){
                 throw new ProdutoJaExisteException("Esse produto ja foi cadastrado, tente outro!");

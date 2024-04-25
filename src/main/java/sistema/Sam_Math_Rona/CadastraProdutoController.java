@@ -28,7 +28,7 @@ public class CadastraProdutoController implements ActionListener {
         else if(sabor.equals("3")) brownie.setSabor(Sabores.DOIS_AMORES);
         else if(sabor.equals("4"))brownie.setSabor(Sabores.NINHO_C_NUTELLA);
         else if(sabor.equals("5")) brownie.setSabor(Sabores.DOCE_DE_LEITE);
-        else brownie.setSabor(Sabores.UNICO);
+        else brownie.setSabor(Sabores.TEST);
 
         int qtEstoque = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade disponivel: "));
         double preco = Double.parseDouble(JOptionPane.showInputDialog("valor do produto: "));
@@ -36,7 +36,7 @@ public class CadastraProdutoController implements ActionListener {
         brownie.setQtEstoque(qtEstoque);
         brownie.setPreco(preco);
         try {
-            sistema.cadastrarProduto(brownie, qtEstoque);
+            sistema.cadastrarProduto(brownie);
             JOptionPane.showMessageDialog(janelaPrincipal, "Produto cadastrado!");
         } catch (ProdutoJaExisteException ex) {
             throw new RuntimeException(ex);

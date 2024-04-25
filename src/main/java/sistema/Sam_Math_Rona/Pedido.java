@@ -62,8 +62,8 @@ public class Pedido implements Serializable {
 
     @Override
     public String toString() {
-        return "Pedido: "+ this.codigo +  " Estado do pedido: "+ this.estadoPedido+" Data "+ this.data + "\nCliente:  " +this.cliente.getNome()+ "\nEndereço: " +
-                this.cliente.getEndereco()+ "\n" + this.carrinho + "\n Total a pagar" +this.valorTotal;
+        return "Pedido: "+ this.codigo +  " Estado do pedido: "+ this.estadoPedido+" Data "+ this.data + "\nCliente:  " +this.cliente.getNome()+ " Endereço: " +
+                this.cliente.getEndereco()+ " N: "+this.cliente.getNumeroCasa() +"\n" + this.carrinho + "\n Total a pagar" +this.valorTotal+"\n\n";
     }
 
     @Override

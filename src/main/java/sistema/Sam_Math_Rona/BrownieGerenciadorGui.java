@@ -52,7 +52,9 @@ public class BrownieGerenciadorGui extends JFrame {
 
         JMenu menuRemover = new JMenu("Remover");
         JMenuItem menuRemoverProduto = new JMenuItem("Produto");
+        JMenuItem menuRemoverPedidoFinalizado = new JMenuItem("Pedido Finalizado");
         menuRemover.add(menuRemoverProduto);
+        menuRemover.add(menuRemoverPedidoFinalizado);
 
         JMenu menuAtualizar = new JMenu("Atualizar");
         JMenuItem menuAlteraQuantidadeEstoque = new JMenuItem("Estoque do produto");
@@ -78,6 +80,15 @@ public class BrownieGerenciadorGui extends JFrame {
 
         menuCadastrarPedido.addActionListener(new CadastraPedidoController(sistema, this));
         menuFinalizarPedido.addActionListener( new PesquisaPedidoController(sistema, this   ));
+        menuRemoverPedidoFinalizado.addActionListener((ae) -> {
+            int codigoPedido = Integer.parseInt(JOptionPane.showInputDialog(null, "Codigo pedido: "));
+            try {
+                sistema.removerPedidoFinalizado(codigoPedido);
+                JOptionPane.showMessageDialog(null, "Pedido: "+  codigoPedido + " Removido!");
+            } catch (PedidoNaoExisteException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         menuCadastrarProduto.addActionListener(new CadastraProdutoController(sistema, this));
         menuRemoverProduto.addActionListener(new RemoveProdutoController(sistema, this));
@@ -92,6 +103,8 @@ public class BrownieGerenciadorGui extends JFrame {
         menuSalvarDados.addActionListener((ae) -> {
             sistema.salvarDados();
         });
+
+
 
         barraMenu.add(menuCadastrar);
         barraMenu.add(menuFinalizar);
