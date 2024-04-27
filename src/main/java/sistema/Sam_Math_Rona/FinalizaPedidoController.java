@@ -5,11 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class PesquisaPedidoController implements ActionListener {
+public class FinalizaPedidoController implements ActionListener {
     private SistemaBrownie sistema;
     private JFrame janelaPrincipal;
 
-    public PesquisaPedidoController(SistemaBrownie sistema, JFrame janela){
+    public FinalizaPedidoController(SistemaBrownie sistema, JFrame janela){
         this.sistema = sistema;
         this.janelaPrincipal = janela;
     }

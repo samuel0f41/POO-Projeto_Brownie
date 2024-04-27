@@ -1,37 +1,33 @@
 package sistema.Sam_Math_Rona;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Produto implements Serializable {
-    private Tipo tipo;
-    private Sabores sabor;
+    private String tipo;
+    private String sabor;
     private int qtEstoque;
     private double preco;
 
-    public Produto( Tipo tipo, Sabores sabor, int qtEstoque, double preco) {
+    public Produto( String tipo, String sabor, int qtEstoque, double preco) {
         this.tipo = tipo;
         this.sabor = sabor;
         this.qtEstoque = qtEstoque;
         this.preco = preco;
     }
-    public Produto(){
-        this.qtEstoque = 0;
-        this.sabor = Sabores.TEST;
-        this.tipo = Tipo.INDEFINIDO;
-    }
-    public Tipo getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(Tipo tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
-    public Sabores getSabor() {
+    public String getSabor() {
         return sabor;
     }
 
-    public void setSabor(Sabores sabor) {
+    public void setSabor(String sabor) {
         this.sabor = sabor;
     }
 
@@ -55,18 +51,13 @@ public class Produto implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Produto produto = (Produto) o;
-
-        if (tipo != produto.tipo) return false;
-        return sabor == produto.sabor;
+        return Objects.equals(tipo, produto.tipo) && Objects.equals(sabor, produto.sabor);
     }
 
     @Override
     public int hashCode() {
-        int result = tipo != null ? tipo.hashCode() : 0;
-        result = 31 * result + (sabor != null ? sabor.hashCode() : 0);
-        return result;
+        return Objects.hash(tipo, sabor);
     }
 
     public String toString(){

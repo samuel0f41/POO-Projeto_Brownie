@@ -14,10 +14,10 @@ public interface SistemaDivinoBrownie {
     void finalizarPedido(int codigo) throws PedidoNaoExisteException;
 
     void cadastrarProduto(Produto produto) throws ProdutoJaExisteException;
-    void removerProduto(Tipo tipo, Sabores sabor);
-    void abasteceEstoqueProduto(Tipo tipo, Sabores sabor, int quantidade) throws ProdutoNaoExisteException;
-    public int quantidadeNoEstoque(Tipo tipo, Sabores sabor) throws ProdutoNaoExisteException;
-
+    void removerProduto(String tipo, String sabor)  throws ProdutoNaoExisteException;
+    void abasteceEstoqueProduto(String tipo, String sabor,int quantAbastecer) throws ProdutoNaoExisteException;
+    public int quantidadeNoEstoque(String tipo,String sabor) throws ProdutoNaoExisteException;
+    public Produto procurarProduto(String tipo, String sabor)throws ProdutoNaoExisteException;
     int quantidadeDeVendasMensal(Month mes);
     int quantidadeDeVendasAnual(Year ano);
     double calculaLucroAnual(Year ano);

@@ -81,7 +81,7 @@ public class BrownieGerenciadorGui extends JFrame {
         //Classes com as funções do sistemas
 
         menuCadastrarPedido.addActionListener(new CadastraPedidoController(sistema, this));
-        menuFinalizarPedido.addActionListener( new PesquisaPedidoController(sistema, this   ));
+        menuFinalizarPedido.addActionListener( new FinalizaPedidoController(sistema, this   ));
         menuRemoverPedidoFinalizado.addActionListener((ae) -> {
             int codigoPedido = Integer.parseInt(JOptionPane.showInputDialog(null, "Codigo pedido: "));
             try {
@@ -101,7 +101,7 @@ public class BrownieGerenciadorGui extends JFrame {
                     "ou Ninho com nutella[4] \nDoce de Leite[5]");
 
             try {
-                Produto p = sistema.procurarProduto(sabor);
+                Produto p = sistema.procurarProduto("","");
                 JOptionPane.showMessageDialog(null, "Quantidade no estoque: "+ p.getQtEstoque());
 
             } catch (ProdutoNaoExisteException e) {

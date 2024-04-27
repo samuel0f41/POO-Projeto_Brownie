@@ -1,8 +1,12 @@
 package sistema.Sam_Math_Rona;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 public class AtualizaQuantidadeBrownieController implements ActionListener {
@@ -14,18 +18,33 @@ public class AtualizaQuantidadeBrownieController implements ActionListener {
         this.janelaPrincipal = janela;
     }
     public void actionPerformed(ActionEvent e){
+        Set<String> listaTipos = new LinkedHashSet<>();
+        for(Produto p : sistema.listaDeProdutos()){
+            listaTipos.add(p.getTipo());
+        }
+        ArrayList<String> listaTiposFinal = new ArrayList<>(listaTipos);
 
-        String sabor = JOptionPane.showInputDialog("Digite sabor: [1 / 2 / 3 / 4 / 5]\n" +
-                "\nBrigadeiro [1] / Ninho [2] / Dois Amores [3] / Ninho com nutella[4] / Doce de Leite[5]");
+        int tipo = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o tipo do produto:","Tipos",0,listaTipos.size(),null,listaTipos.toArray(),listaTipos);
+        Set<String> listaSabor = new LinkedHashSet<>();
+        for(Produto p : sistema.listaDeProdutos()){
+            if(listaTiposFinal.get(tipo).equals(p.getTipo())){
+                listaSabor.add(p.getSabor());
+            }
+        }
+        ArrayList<String> listaSaborFinal = new ArrayList<>(listaSabor);
+
+        int sabor = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o Sabor do produto:","Sabores",0,listaSabor.size(),null,listaSabor.toArray(),listaSabor);
+
+        String quant = JOptionPane.showInputDialog(janelaPrincipal,"Digite o valor a abastecer: ");
+        int quanti = Integer.parseInt(quant);
 
         try {
-            Produto produto = sistema.procurarProduto(sabor);
-            int novaQuantidade = Integer.parseInt(JOptionPane.showInputDialog("Digite quantidade para acrescentar no estoque: "));
-
-            sistema.abasteceEstoqueProduto(produto.getTipo(),produto.getSabor(), novaQuantidade);
+            sistema.abasteceEstoqueProduto(listaTiposFinal.get(tipo),listaSaborFinal.get(sabor),quanti);
+            JOptionPane.showMessageDialog(janelaPrincipal,sistema.procurarProduto(listaTiposFinal.get(tipo),listaSaborFinal.get(sabor)));
         } catch (ProdutoNaoExisteException ex) {
             throw new RuntimeException(ex);
         }
+
 
     }
 
