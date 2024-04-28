@@ -3,8 +3,7 @@ package sistema.Sam_Math_Rona;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 public class CadastraPedidoController implements ActionListener {
@@ -16,40 +15,90 @@ public class CadastraPedidoController implements ActionListener {
         this.janelaPrincipal = janela;
     }
     public void actionPerformed(ActionEvent e){
-
         String nome = JOptionPane.showInputDialog("Nome do clinte: ");
-        String endereco = JOptionPane.showInputDialog("endereço: ");
-        String numeroCasa = JOptionPane.showInputDialog("Numero da casa: ");
-        Cliente c1 = new Cliente(nome, endereco, numeroCasa);
+        if(nome == null){
+            JOptionPane.showMessageDialog(janelaPrincipal, "Cadastro cancelado","Cancelado",JOptionPane.ERROR_MESSAGE);
+        }
+        else if(nome.trim().isEmpty()){
+            JOptionPane.showMessageDialog(janelaPrincipal,"Nome não pode ser vazio","Cancelado",JOptionPane.WARNING_MESSAGE);
+        }else{
+            String[] opcoes = {"ENTREGA", "RETIRADA"};
+            int op = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o tipo de entrega:","Entrega",0,2,null,opcoes,opcoes[0]);
+            Cliente c1 = new Cliente(nome);
+            if(op==0){
+                String numeroCasa = JOptionPane.showInputDialog("Numero da casa: ");
+                if(numeroCasa == null){
+                    JOptionPane.showMessageDialog(janelaPrincipal, "Cadastro cancelado","Cancelado",JOptionPane.ERROR_MESSAGE);
+                    op=-1;
+                } else if(numeroCasa.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(janelaPrincipal, "Numero da casa não pode ser vazio", "Cancelado", JOptionPane.WARNING_MESSAGE);
+                    op = - 1;
+                }else {
+                    String endereco = JOptionPane.showInputDialog("Digete o seu endereço:");
+                    if(endereco == null){
+                        JOptionPane.showMessageDialog(janelaPrincipal, "Cadastro cancelado","Cancelado",JOptionPane.ERROR_MESSAGE);
+                        op=-1;
+                    }
+                    else if(endereco.trim().isEmpty()){
+                        JOptionPane.showMessageDialog(janelaPrincipal,"Nome não pode ser vazio","Cancelado",JOptionPane.WARNING_MESSAGE);
+                        op=-1;
+                    }else {
+                        c1.setEndereco(endereco);
+                        c1.setNumeroCasa(numeroCasa);
+                    }
+                }
 
-        List<Produto> carrinho = new ArrayList<>();
-        String itemPedido = "s";
-
-        while (itemPedido.equals("s")){
-            Tipo tipo = Tipo.BROWNIE;
-            String sabores = JOptionPane.showInputDialog("Digite sabor: [1 / 2 / 3 / 4 / 5]\n"+
-            "\nSabores possiveis: \nBrigadeiro [1] ou Ninho [2] \nDois Amores [3] " +
-                    "ou Ninho com nutella[4] \nDoce de Leite[5]");
-
-            try {
-                Produto brownie = sistema.procurarProduto(sabores);
-                carrinho.add(brownie);
-
-            } catch (ProdutoNaoExisteException ex) {
-                throw new RuntimeException(ex);
+            } else if(op==1){
+                c1.setEndereco("Retirada");
+            } else if(op == -1){
+                JOptionPane.showMessageDialog(janelaPrincipal, " O pedido foi cancelado");
             }
 
-            itemPedido = JOptionPane.showInputDialog("Deseja adicionar mais? [s/n] ");
+            if(op == 0 || op == 1){
+                List<Produto> carrinho = new ArrayList<>();
+                int condicao = 0;
+                while(condicao == 0){
+                    Set<String> listaTipos = new LinkedHashSet<>();
+                    for(Produto p : sistema.listaDeProdutos()){
+                            listaTipos.add(p.getTipo());
+                    }
+                    ArrayList<String> listaTiposFinal = new ArrayList<>(listaTipos);
+
+                    int tipo = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o tipo do produto:","Tipos",0,listaTipos.size(),null,listaTipos.toArray(),listaTipos);
+                    Set<String> listaSabor = new LinkedHashSet<>();
+                    for(Produto p : sistema.listaDeProdutos()){
+                        if(listaTiposFinal.get(tipo).equals(p.getTipo())){
+                            listaSabor.add(p.getSabor());
+                        }
+                    }
+                    ArrayList<String> listaSaborFinal = new ArrayList<>(listaSabor);
+
+                    int sabor = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o Sabor do produto:","Sabores",0,listaSabor.size(),null,listaSabor.toArray(),listaSabor);
+
+                    try {
+                        Produto produto = sistema.procurarProduto(listaTiposFinal.get(tipo), listaSaborFinal.get(sabor));
+                        carrinho.add(produto);
+                    } catch (ProdutoNaoExisteException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+
+                    String[] comprando = {"SIM", "NÃO"};
+                    condicao = JOptionPane.showOptionDialog(janelaPrincipal, "Deseja continuar comprando?:","Carrinho",0,2,null,comprando,comprando[0]);
+
+                }
+                if(op != -1){
+                    Pedido pedido = new Pedido(c1,carrinho);
+                    try {
+                        sistema.cadastrarPedido(pedido);
+                    } catch (CodigoPedidoJaExiste ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    JOptionPane.showMessageDialog(janelaPrincipal, pedido.toString());
+                }
+            }
         }
 
-        Pedido pedido = new Pedido(c1, carrinho);
-        try {
-            sistema.cadastrarPedido(pedido);
-            JOptionPane.showMessageDialog(janelaPrincipal, "Pedido Realizado!\n Total a pagar: "+ pedido.getValorTotal());
-
-        } catch (CodigoPedidoJaExiste ex) {
-            throw new RuntimeException(ex);
-        }
 
     }
 

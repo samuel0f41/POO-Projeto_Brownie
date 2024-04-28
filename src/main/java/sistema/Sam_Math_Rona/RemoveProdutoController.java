@@ -3,6 +3,9 @@ package sistema.Sam_Math_Rona;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 public class RemoveProdutoController implements ActionListener {
@@ -15,14 +18,32 @@ public class RemoveProdutoController implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e){
+        try {
+            sistema.cadastrarProduto(new Produto("Bronwi","leita",2,1));
+        } catch (ProdutoJaExisteException ex) {
+            throw new RuntimeException(ex);
+        }
+        Set<String> listaTipos = new LinkedHashSet<>();
+        for(Produto p : sistema.listaDeProdutos()){
+            listaTipos.add(p.getTipo());
+        }
+        ArrayList<String> listaTiposFinal = new ArrayList<>(listaTipos);
 
-        String sabor = JOptionPane.showInputDialog("Qual sabor?\n" +
-                "\nBrigadeiro [1] / Ninho [2] / Dois Amores [3] / Ninho com nutella[4] / Doce de Leite[5]");
+        int tipo = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o tipo do produto:","Tipos",0,listaTipos.size(),null,listaTipos.toArray(),listaTipos);
+        Set<String> listaSabor = new LinkedHashSet<>();
+        for(Produto p : sistema.listaDeProdutos()){
+            if(listaTiposFinal.get(tipo).equals(p.getTipo())){
+                listaSabor.add(p.getSabor());
+            }
+        }
+        ArrayList<String> listaSaborFinal = new ArrayList<>(listaSabor);
+
+        int sabor = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o Sabor do produto:","Sabores",0,listaSabor.size(),null,listaSabor.toArray(),listaSabor);
 
         try {
-            Produto brownie = sistema.procurarProduto(sabor);
-            sistema.removerProduto(Tipo.BROWNIE, brownie.getSabor());
-            JOptionPane.showMessageDialog(janelaPrincipal, "Produto removido!");
+            Produto produto = sistema.procurarProduto(listaTiposFinal.get(tipo),listaSaborFinal.get(sabor));
+            sistema.removerProduto(listaTiposFinal.get(tipo),listaSaborFinal.get(sabor));
+            JOptionPane.showMessageDialog(janelaPrincipal, "Produto removido! " + produto);
 
         } catch (ProdutoNaoExisteException ex) {
             throw new RuntimeException(ex);

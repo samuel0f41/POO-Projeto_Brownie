@@ -119,85 +119,58 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
     @Override
     public void cadastrarProduto(Produto produto)throws ProdutoJaExisteException{
         for(Produto p : produtos){
-            if(p.getSabor() == produto.getSabor() && p.getTipo() == produto.getTipo()){
+            if(p.getSabor().equals(produto.getSabor()) && p.getTipo().equals(produto.getTipo())){
                 throw new ProdutoJaExisteException("Esse produto ja foi cadastrado, tente outro!");
             }
         }
-
         produtos.add(produto);
-
     }
     @Override
-    public void removerProduto(Tipo tipo, Sabores sabor) {
+    public void removerProduto(String tipo, String sabor) throws ProdutoNaoExisteException {
+        boolean produtoEncontrado = false; // Variável para verificar se o produto foi encontrado
         for(Produto p: produtos){
-            if (p.getTipo() == tipo  && p.getSabor()== sabor) {
+            if (p.getSabor().equals(sabor) && p.getTipo().equals(tipo)) {
                 produtos.remove(p);
+                produtoEncontrado = true;
             }
+        }
+        if (!produtoEncontrado) {
+            throw new ProdutoNaoExisteException("Esse produto não existe no sistema!");
         }
     }
 
     @Override
-    public void abasteceEstoqueProduto(Tipo tipo, Sabores sabor, int quantidade)throws ProdutoNaoExisteException {
-        for(Produto p : produtos){
-            if(p.getTipo().equals(tipo) && p.getSabor().equals(sabor)){
+    public void abasteceEstoqueProduto(String tipo, String sabor, int quantAbastecer) throws ProdutoNaoExisteException {
+        boolean produtoEncontrado = false; // Variável para verificar se o produto foi encontrado
+        for (Produto p : produtos) {
+            if (p.getSabor().equals(sabor) && p.getTipo().equals(tipo)) {
                 int quantAnterior = p.getQtEstoque();
-                int quantNova = quantAnterior + quantidade;
+                int quantNova = quantAnterior + quantAbastecer;
                 p.setQtEstoque(quantNova);
+                produtoEncontrado = true;
             }
         }
-        throw new ProdutoNaoExisteException("Esse produto não existe no sistema, estoque nao atualizado!");
+        if (!produtoEncontrado) {
+            throw new ProdutoNaoExisteException("Esse produto não existe no sistema, estoque não atualizado!");
+        }
     }
 
-    public int quantidadeNoEstoque(Tipo tipo, Sabores sabor) throws ProdutoNaoExisteException {
+    @Override
+    public int quantidadeNoEstoque(String tipo, String sabor) throws ProdutoNaoExisteException {
         for(Produto p : produtos){
-            if(p.getTipo().equals(tipo) && p.getSabor().equals(sabor)){
+            if(p.getSabor().equals(sabor) && p.getTipo().equals(tipo)){
                 return p.getQtEstoque();
             }
         } throw new ProdutoNaoExisteException("Esse produto não existe no sistema");
     }
-
-    public Produto procurarProduto(String sabor)throws ProdutoNaoExisteException{
-        //Legenda 1-Brigadeiro 2-Ninho 3-Dois_Amores 4-NinhoC/Nutela 5- Doce_de_Leite
-        Produto brownie = null;
-        if(sabor.equals("1")) {
-            for(Produto b: produtos){
-                if(b.getSabor() == Sabores.BRIGADEIRO){
-                    brownie = b;
-                }
+    @Override
+    public Produto procurarProduto(String tipo, String sabor)throws ProdutoNaoExisteException{
+        for(Produto p : produtos) {
+            if (p.getSabor().equals(sabor) && p.getTipo().equals(tipo)) {
+                return p;
             }
         }
-        else if (sabor.equals("2")) {
-            for(Produto b: produtos){
-                if(b.getSabor() == Sabores.NINHO){
-                    brownie = b;
-                }
-            }
-        }
-        else if (sabor.equals("3")) {
-            for(Produto b: produtos){
-                if(b.getSabor() == Sabores.DOIS_AMORES){
-                    brownie = b;
-                }
-            }
-        }
-        else if (sabor.equals("4")) {
-            for(Produto b: produtos){
-                if(b.getSabor() == Sabores.NINHO_C_NUTELLA){
-                    brownie = b;
-                }
-            }
-        }
-        else if(sabor.equals("5")){
-            for(Produto b: produtos){
-                if(b.getSabor() == Sabores.DOCE_DE_LEITE){
-                    brownie = b;
-                }
-            }
-        }
-        if(brownie == null){
-            throw new ProdutoNaoExisteException("Esse produto não existe no sistema, estoque nao atualizado!");
-        }
-        return brownie;
+        throw new ProdutoNaoExisteException("Esse produto não existe no sistema");
     }
 
     @Override

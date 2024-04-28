@@ -17,27 +17,17 @@ public class CadastraProdutoController implements ActionListener {
         this.janelaPrincipal = janela;
     }
     public void actionPerformed(ActionEvent e){
-        String sabor = JOptionPane.showInputDialog("Qual sabor do Brownie: \n"+
-                "\nBrigadeiro [1] ou Ninho [2] \nDois Amores [3] " +
-                "ou Ninho com nutella[4] \nDoce de Leite[5]");
-
-        Produto brownie = new Produto();
-        brownie.setTipo(Tipo.BROWNIE);
-        if(sabor.equals("1")) brownie.setSabor(Sabores.BRIGADEIRO);
-        else if(sabor.equals("2"))brownie.setSabor(Sabores.NINHO);
-        else if(sabor.equals("3")) brownie.setSabor(Sabores.DOIS_AMORES);
-        else if(sabor.equals("4"))brownie.setSabor(Sabores.NINHO_C_NUTELLA);
-        else if(sabor.equals("5")) brownie.setSabor(Sabores.DOCE_DE_LEITE);
-        else brownie.setSabor(Sabores.TEST);
-
+        String tipo = JOptionPane.showInputDialog("Qual Tipo do Produto: ");
+        String sabor = JOptionPane.showInputDialog("Qual Sabor do Produto: ");
         int qtEstoque = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade disponivel: "));
         double preco = Double.parseDouble(JOptionPane.showInputDialog("valor do produto: "));
-
-        brownie.setQtEstoque(qtEstoque);
-        brownie.setPreco(preco);
         try {
-            sistema.cadastrarProduto(brownie);
-            JOptionPane.showMessageDialog(janelaPrincipal, "Produto cadastrado!");
+            sistema.cadastrarProduto(new Produto(tipo,sabor,qtEstoque,preco));
+            try {
+                JOptionPane.showMessageDialog(janelaPrincipal, "Produto cadastrado!" + sistema.procurarProduto(tipo,sabor));
+            } catch (ProdutoNaoExisteException ex) {
+                throw new RuntimeException(ex);
+            }
         } catch (ProdutoJaExisteException ex) {
             throw new RuntimeException(ex);
         }
