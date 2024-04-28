@@ -17,16 +17,20 @@ public class Pedido implements Serializable {
         this.cliente = cliente;
         this.carrinho = produtos;
         this.estadoPedido = EstadoPedido.PENDENTE;
+        this.valorTotal = calculatotal();
     }
 
     public double getValorTotal() {
+        return this.valorTotal;
+    }
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+    private Double calculatotal(){
         for(Produto p: this.carrinho){
             this.valorTotal += p.getPreco();
         }
         return valorTotal;
-    }
-    public void setValorTotal(double valorTotal) {
-        this.valorTotal = valorTotal;
     }
     public int getCodigo() {
         return codigo;
@@ -68,7 +72,7 @@ public class Pedido implements Serializable {
                     "\n"+ "Data "+ this.data +
                     "\n"+ "Cliente:  " +this.cliente.getNome() +
                     "\n"+ "Itens do carrinho: " + this.carrinho +
-                    "\n"+ "Total a pagar: " +this.getValorTotal();
+                    "\n"+ "Total a pagar: " +this.valorTotal;
         }else {
             return "Código do pedido: " + this.codigo +
                     "\n"+ "Estado do pedido: " + this.estadoPedido +
@@ -77,7 +81,7 @@ public class Pedido implements Serializable {
                     "\n"+ "Endereço: " + this.cliente.getEndereco() +
                     "\n"+ "Número da casa: " + this.cliente.getNumeroCasa() +
                     "\n"+ "Itens do carrinho: "+ this.carrinho +
-                    "\n"+ "Total a pagar: " + this.getValorTotal();
+                    "\n"+ "Total a pagar: " + this.valorTotal;
         }
     }
 
