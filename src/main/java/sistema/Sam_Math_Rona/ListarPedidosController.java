@@ -14,7 +14,7 @@ public class ListarPedidosController implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e){
-        JOptionPane.showInputDialog(janelaPrincipal, sistema.listaDeTodosPedidos());
+        JOptionPane.showMessageDialog(janelaPrincipal, sistema.listaDeTodosPedidos());
     }
 
 }
