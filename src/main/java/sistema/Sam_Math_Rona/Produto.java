@@ -39,6 +39,7 @@ public class Produto implements Serializable {
         this.qtEstoque = qtEstoque;
     }
 
+
     public double getPreco() {
         return preco;
     }

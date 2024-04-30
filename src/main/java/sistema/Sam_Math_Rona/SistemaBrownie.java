@@ -177,7 +177,7 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
     public int quantidadeDeVendasMensal(Month mes) {
         int quantidadeVendasMes = 0;
         for(Pedido p: pedidos.values()){
-            if(p.getMes() == mes){
+            if(p.getData().getMonth() == mes){
                 quantidadeVendasMes++;
             }
         }
@@ -196,7 +196,13 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
 
     @Override
     public double calculaLucroMensal(Month mes) {
-        return 0;
+        double valorTotalLucro = 0;
+        for(Pedido p: this.pedidos.values()){
+            if(p.getData().getMonth() == mes){
+                valorTotalLucro = valorTotalLucro + p.getValorTotal();
+            }
+        }
+        return valorTotalLucro;
     }
 
     public void setPedidos(Map<Integer, Pedido> pedidos) {

@@ -15,9 +15,7 @@ public class ListarProdutosController implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e){
-
-        JOptionPane.showInputDialog(janelaPrincipal, sistema.listaDeProdutos());
-
+        JOptionPane.showMessageDialog(janelaPrincipal, sistema.listaDeProdutos());
     }
 
 }

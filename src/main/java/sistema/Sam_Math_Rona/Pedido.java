@@ -2,14 +2,14 @@ package sistema.Sam_Math_Rona;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.List;
+import java.util.Objects;
 
 public class Pedido implements Serializable {
     private int codigo;
     private Cliente cliente;
     private List<Produto> carrinho;
-    private double valorTotal = 0;
+    private double valorTotal;
     private EstadoPedido estadoPedido;
     private LocalDateTime data = LocalDateTime.now();
 
@@ -20,12 +20,13 @@ public class Pedido implements Serializable {
     }
 
     public double getValorTotal() {
-        return valorTotal;
-    }
-    public void setValorTotal(double valorTotal) {
         for(Produto p: this.carrinho){
             this.valorTotal += p.getPreco();
         }
+        return valorTotal;
+    }
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
     }
     public int getCodigo() {
         return codigo;
@@ -55,10 +56,6 @@ public class Pedido implements Serializable {
     public LocalDateTime getData() {
         return data;
     }
-    public Month getMes(){
-        LocalDateTime data = this.data;
-        return data.getMonth();
-    }
     public void setData(LocalDateTime data) {
         this.data = data;
     }
@@ -68,10 +65,10 @@ public class Pedido implements Serializable {
         if(this.cliente.getEndereco().equals("Retirada")){
             return "Pedido: "+ this.codigo +
                     "\n"+ "Estado do pedido: "+ this.estadoPedido+
-                    "\n"+ "Data "+ this.data.getMonth() +
+                    "\n"+ "Data "+ this.data +
                     "\n"+ "Cliente:  " +this.cliente.getNome() +
                     "\n"+ "Itens do carrinho: " + this.carrinho +
-                    "\n"+ "Total a pagar: " +this.valorTotal;
+                    "\n"+ "Total a pagar: " +this.getValorTotal();
         }else {
             return "Código do pedido: " + this.codigo +
                     "\n"+ "Estado do pedido: " + this.estadoPedido +
@@ -80,7 +77,7 @@ public class Pedido implements Serializable {
                     "\n"+ "Endereço: " + this.cliente.getEndereco() +
                     "\n"+ "Número da casa: " + this.cliente.getNumeroCasa() +
                     "\n"+ "Itens do carrinho: "+ this.carrinho +
-                    "\n"+ "Total a pagar: " + this.valorTotal;
+                    "\n"+ "Total a pagar: " + this.getValorTotal();
         }
     }
 
