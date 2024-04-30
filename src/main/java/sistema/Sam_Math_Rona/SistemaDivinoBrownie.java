@@ -19,8 +19,8 @@ public interface SistemaDivinoBrownie {
     public int quantidadeNoEstoque(String tipo,String sabor) throws ProdutoNaoExisteException;
     public Produto procurarProduto(String tipo, String sabor)throws ProdutoNaoExisteException;
     int quantidadeDeVendasMensal(Month mes);
-    int quantidadeDeVendasAnual(Year ano);
-    double calculaLucroAnual(Year ano);
+    int quantidadeDeVendasAnual(int ano);
+    double calculaLucroAnual(int ano);
     double calculaLucroMensal(Month mes);
     void salvarDados();
 }

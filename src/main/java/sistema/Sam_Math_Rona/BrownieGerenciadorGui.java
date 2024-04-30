@@ -112,18 +112,21 @@ public class BrownieGerenciadorGui extends JFrame {
                 throw new RuntimeException(e);
             }
         });
-
-        menuListarPedidos.addActionListener(new ListarPedidosController(sistema, this));
-        menuListarProdutos.addActionListener(new ListarProdutosController(sistema, this));
-
-        menuListarPedidosPendentes.addActionListener(new ListarPedidosPendentesController(sistema, this));
         menuCancelarPedido.addActionListener(new CancelarPedidoController(sistema, this));
+        menuVerQuantidadeVendasDoMes.addActionListener(new QuantidadeDeVendasMensalController(sistema, this));
 
+        menuListarPedidos.addActionListener((ae) ->{
+            JOptionPane.showMessageDialog(this, sistema.listaDeTodosPedidos());
+        });
+        menuListarProdutos.addActionListener((ae)->{
+            JOptionPane.showMessageDialog(this, sistema.listaDeProdutos());
+        });
+        menuListarPedidosPendentes.addActionListener((ae) -> {
+            JOptionPane.showMessageDialog(this, sistema.listaDePedidosPendentes());
+        });
         menuSalvarDados.addActionListener((ae) -> {
             sistema.salvarDados();
         });
-        menuVerQuantidadeVendasDoMes.addActionListener(new QuantidadeDeVendasMensalController(sistema, this));
-
 
         barraMenu.add(menuCadastrar);
         barraMenu.add(menuFinalizar);

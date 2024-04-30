@@ -20,10 +20,12 @@ public class SistemaBrownieTest {
 
     }
     @Test
-    public void VerQuantidadeNoEstoque(){
+    public void VerQuantidadeNoEstoque() throws ProdutoJaExisteException {
+        Produto p1 = new Produto("Brownie", "Morango",1,5.0);
+        sistema.cadastrarProduto(p1);
         for(Produto p: sistema.listaDeProdutos()){
-            if(p.getSabor().equals("Brigadeiro")   ){
-                assertTrue(p.getQtEstoque()==7);
+            if(p.getSabor().equals("Morango")   ){
+                assertTrue(p.getQtEstoque()==1);
                 break;
             }
         }

@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.Year;
 import java.util.*;
 
 public class SistemaBrownie implements SistemaDivinoBrownie {
@@ -175,23 +174,37 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
 
     @Override
     public int quantidadeDeVendasMensal(Month mes) {
-        int quantidadeVendasMes = 0;
+        int quantidadeDeVendasNoMes = 0;
         for(Pedido p: pedidos.values()){
             if(p.getData().getMonth() == mes){
-                quantidadeVendasMes++;
+                quantidadeDeVendasNoMes++;
             }
         }
-        return quantidadeVendasMes;
+        return quantidadeDeVendasNoMes;
     }
 
     @Override
-    public int quantidadeDeVendasAnual(Year ano) {
-        return 0;
+    public int quantidadeDeVendasAnual(int ano) {
+        int quantidadeDeVendasNoAno = 0;
+        for(Pedido p: pedidos.values()){
+            if(p.getData().getYear() == ano){
+                quantidadeDeVendasNoAno++;
+            }
+        }
+        return quantidadeDeVendasNoAno;
     }
 
     @Override
-    public double calculaLucroAnual(Year ano) {
-        return 0;
+    public double calculaLucroAnual(int ano) {
+        double valorLucroTotal = 0;
+
+        for(Pedido p: pedidos.values()){
+            if(p.getData().getYear() == ano ){
+                valorLucroTotal += p.getValorTotal();
+            }
+        }
+
+        return valorLucroTotal;
     }
 
     @Override

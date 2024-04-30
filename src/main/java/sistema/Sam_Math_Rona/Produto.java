@@ -52,13 +52,18 @@ public class Produto implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Produto produto = (Produto) o;
-        return Objects.equals(tipo, produto.tipo) && Objects.equals(sabor, produto.sabor);
+
+        if (!Objects.equals(tipo, produto.tipo)) return false;
+        return Objects.equals(sabor, produto.sabor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tipo, sabor);
+        int result = tipo != null ? tipo.hashCode() : 0;
+        result = 31 * result + (sabor != null ? sabor.hashCode() : 0);
+        return result;
     }
 
     public String toString(){
