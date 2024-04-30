@@ -175,7 +175,13 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
 
     @Override
     public int quantidadeDeVendasMensal(Month mes) {
-        return 0;
+        int quantidadeVendasMes = 0;
+        for(Pedido p: pedidos.values()){
+            if(p.getMes() == mes){
+                quantidadeVendasMes++;
+            }
+        }
+        return quantidadeVendasMes;
     }
 
     @Override

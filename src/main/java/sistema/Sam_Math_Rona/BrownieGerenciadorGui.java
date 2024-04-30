@@ -74,6 +74,10 @@ public class BrownieGerenciadorGui extends JFrame {
         menuPedidosPendentes.add(menuListarPedidosPendentes);
         menuPedidosPendentes.add(menuCancelarPedido);
 
+        JMenu menuLucros = new JMenu("Calcular Lucro");
+        JMenuItem menuVerQuantidadeVendasDoMes = new JMenuItem("Quantidade de vendas do Mes");
+        menuLucros.add(menuVerQuantidadeVendasDoMes);
+
         JMenu menuSalvar = new JMenu("Salvar");
         JMenuItem menuSalvarDados = new JMenuItem("Dados atuais");
         menuSalvar.add(menuSalvarDados);
@@ -118,6 +122,7 @@ public class BrownieGerenciadorGui extends JFrame {
         menuSalvarDados.addActionListener((ae) -> {
             sistema.salvarDados();
         });
+        menuVerQuantidadeVendasDoMes.addActionListener(new QuantidadeDeVendasMensalController(sistema, this));
 
 
         barraMenu.add(menuCadastrar);
@@ -126,6 +131,7 @@ public class BrownieGerenciadorGui extends JFrame {
         barraMenu.add(menuAtualizar);
         barraMenu.add(menuRemover);
         barraMenu.add(menuListar);
+        barraMenu.add(menuLucros);
         barraMenu.add(menuSalvar);
 
 

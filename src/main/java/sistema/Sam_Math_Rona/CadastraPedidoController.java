@@ -23,7 +23,8 @@ public class CadastraPedidoController implements ActionListener {
             JOptionPane.showMessageDialog(janelaPrincipal,"Nome não pode ser vazio","Cancelado",JOptionPane.WARNING_MESSAGE);
         }else{
             String[] opcoes = {"ENTREGA", "RETIRADA"};
-            int op = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o tipo de entrega:","Entrega",0,2,null,opcoes,opcoes[0]);
+            int op = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o tipo de entrega:"
+                    ,"Entrega",0,2,null,opcoes,opcoes[0]);
             Cliente c1 = new Cliente(nome);
             if(op==0){
                 String numeroCasa = JOptionPane.showInputDialog("Numero da casa: ");
@@ -64,7 +65,8 @@ public class CadastraPedidoController implements ActionListener {
                     }
                     ArrayList<String> listaTiposFinal = new ArrayList<>(listaTipos);
 
-                    int tipo = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o tipo do produto:","Tipos",0,listaTipos.size(),null,listaTipos.toArray(),listaTipos);
+                    int tipo = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o tipo do produto:",
+                            "Tipos",0,listaTipos.size(),null,listaTipos.toArray(),listaTipos);
                     Set<String> listaSabor = new LinkedHashSet<>();
                     for(Produto p : sistema.listaDeProdutos()){
                         if(listaTiposFinal.get(tipo).equals(p.getTipo())){
@@ -84,11 +86,13 @@ public class CadastraPedidoController implements ActionListener {
 
 
                     String[] comprando = {"SIM", "NÃO"};
-                    condicao = JOptionPane.showOptionDialog(janelaPrincipal, "Deseja continuar comprando?:","Carrinho",0,2,null,comprando,comprando[0]);
+                    condicao = JOptionPane.showOptionDialog(janelaPrincipal, "Deseja continuar comprando?:","Carrinho"
+                            ,0,2,null,comprando,comprando[0]);
 
                 }
                 if(op != -1){
                     Pedido pedido = new Pedido(c1,carrinho);
+                    pedido.getValorTotal();
                     try {
                         sistema.cadastrarPedido(pedido);
                     } catch (CodigoPedidoJaExiste ex) {
