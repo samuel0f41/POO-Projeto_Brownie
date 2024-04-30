@@ -85,6 +85,7 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
 
         pedido.setCodigo(codigoAtual);
         pedido.setEstadoPedido(EstadoPedido.PENDENTE);
+        pedido.getAtualizarValorTotal();
         if(this.pedidosPendentes.containsKey(pedido.getCodigo()) || this.pedidos.containsKey(pedido.getCodigo())){
                 throw new CodigoPedidoJaExiste("Ja existe um pedido com esse codigo");
 
