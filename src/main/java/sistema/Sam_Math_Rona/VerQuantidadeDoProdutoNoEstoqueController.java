@@ -3,6 +3,9 @@ package sistema.Sam_Math_Rona;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class VerQuantidadeDoProdutoNoEstoqueController implements ActionListener {
 
@@ -14,13 +17,27 @@ public class VerQuantidadeDoProdutoNoEstoqueController implements ActionListener
     }
 
     public void actionPerformed(ActionEvent e){
-        String sabor = JOptionPane.showInputDialog("Qual sabor do Brownie: \n"+
-                "\nBrigadeiro [1] ou Ninho [2] \nDois Amores [3] " +
-                "ou Ninho com nutella[4] \nDoce de Leite[5]");
+        Set<String> listaTipos = new LinkedHashSet<>();
+        for(Produto p : sistema.listaDeProdutos()){
+            listaTipos.add(p.getTipo());
+        }
+        ArrayList<String> listaTiposFinal = new ArrayList<>(listaTipos);
+
+        int tipo = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o tipo do produto:","Tipos",0,listaTipos.size(),null,listaTipos.toArray(),listaTipos);
+        Set<String> listaSabor = new LinkedHashSet<>();
+        for(Produto p : sistema.listaDeProdutos()){
+            if(listaTiposFinal.get(tipo).equals(p.getTipo())){
+                listaSabor.add(p.getSabor());
+            }
+        }
+        ArrayList<String> listaSaborFinal = new ArrayList<>(listaSabor);
+
+        int sabor = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o Sabor do produto:","Sabores",0,listaSabor.size(),null,listaSabor.toArray(),listaSabor);
+
 
         try {
-            Produto p = sistema.procurarProduto("","");
-            JOptionPane.showMessageDialog(null, "Quantidade no estoque: "+ p.getQtEstoque());
+            Produto produto = sistema.procurarProduto(listaTiposFinal.get(tipo),listaSaborFinal.get(sabor));
+            JOptionPane.showMessageDialog(null, "Quantidade no estoque: "+ produto.getQtEstoque());
 
         } catch (ProdutoNaoExisteException ex) {
             throw new RuntimeException(ex);
