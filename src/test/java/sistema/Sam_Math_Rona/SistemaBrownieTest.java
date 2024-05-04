@@ -24,7 +24,7 @@ public class SistemaBrownieTest {
         Produto p1 = new Produto("Brownie", "Morango",1,5.0);
         sistema.cadastrarProduto(p1);
         for(Produto p: sistema.listaDeProdutos()){
-            if(p.getSabor().equals("Morango")   ){
+            if(p.getTipo().equals("Brownie") && p.getSabor().equals("Morango")   ){
                 assertTrue(p.getQtEstoque()==1);
                 break;
             }
@@ -34,13 +34,13 @@ public class SistemaBrownieTest {
     @Test
     public void testaRemoverProduto() throws ProdutoJaExisteException, ProdutoNaoExisteException {
         Produto p1 = new Produto("Brownie", "Morango", 1, 5.00);
-        assertEquals(2, sistema.listaDeProdutos().size());
+        assertEquals(4, sistema.listaDeProdutos().size());
 
         sistema.cadastrarProduto(p1);
-        assertEquals(3, sistema.listaDeProdutos().size());
+        assertEquals(5, sistema.listaDeProdutos().size());
 
         sistema.removerProduto("Brownie", "Morango");
-        assertTrue(sistema.listaDeProdutos().size()==2);
+        assertTrue(sistema.listaDeProdutos().size()==4);
 
     }
 
@@ -48,10 +48,10 @@ public class SistemaBrownieTest {
     @Test
     public void testaCadastrarPedido() throws ProdutoJaExisteException, CodigoPedidoJaExiste, PedidoNaoExisteException {
         Produto p1 = new Produto("Brownie", "Morango", 10, 5.00);
-        assertEquals(2, sistema.listaDeProdutos().size());
+        assertEquals(4, sistema.listaDeProdutos().size());
 
         sistema.cadastrarProduto(p1);
-        assertEquals(3, sistema.listaDeProdutos().size());
+        assertEquals(5, sistema.listaDeProdutos().size());
 
         List<Produto> carrinho = new LinkedList<>();
         carrinho.add(p1);
@@ -64,17 +64,17 @@ public class SistemaBrownieTest {
 
         sistema.finalizarPedido(pe1.getCodigo());
 
-        assertTrue(sistema.listaDeTodosPedidos().size()==1);
+        assertTrue(sistema.listaDeTodosPedidos().size()==3);
 
     }
 
     @Test
     public void testaRemoverPedido() throws ProdutoJaExisteException, CodigoPedidoJaExiste, PedidoNaoExisteException {
         Produto p1 = new Produto("Brownie", "Morango", 10, 5.00);
-        assertEquals(2, sistema.listaDeProdutos().size());
+        assertEquals(4, sistema.listaDeProdutos().size());
 
         sistema.cadastrarProduto(p1);
-        assertEquals(3, sistema.listaDeProdutos().size());
+        assertEquals(5, sistema.listaDeProdutos().size());
 
         List<Produto> carrinho = new LinkedList<>();
         carrinho.add(p1);
@@ -88,5 +88,13 @@ public class SistemaBrownieTest {
 
         sistema.cancelarPedido(pe1.getCodigo());
         assertTrue(sistema.listaDePedidosPendentes().size()==0);
+
+        sistema.cadastrarPedido(pe1);
+        sistema.finalizarPedido(pe1.getCodigo());
+        assertTrue(sistema.listaDeTodosPedidos().size()==3);
+
+        sistema.removerPedidoFinalizado(pe1.getCodigo());
+        assertTrue(sistema.listaDeTodosPedidos().size()==2);
+
     }
 }

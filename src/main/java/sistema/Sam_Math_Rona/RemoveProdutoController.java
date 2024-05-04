@@ -18,11 +18,7 @@ public class RemoveProdutoController implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e){
-        try {
-            sistema.cadastrarProduto(new Produto("Bronwi","leita",2,1));
-        } catch (ProdutoJaExisteException ex) {
-            throw new RuntimeException(ex);
-        }
+
         Set<String> listaTipos = new LinkedHashSet<>();
         for(Produto p : sistema.listaDeProdutos()){
             listaTipos.add(p.getTipo());
