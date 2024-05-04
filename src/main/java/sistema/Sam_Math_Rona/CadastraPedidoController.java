@@ -9,13 +9,20 @@ import java.util.*;
 public class CadastraPedidoController implements ActionListener {
     private SistemaBrownie sistema;
     private JFrame janelaPrincipal;
+    ImageIcon addcar = new ImageIcon("./imgs/icons/addcar.png");
+    ImageIcon local = new ImageIcon("./imgs/icons/local.png");
+    ImageIcon disk = new ImageIcon("./imgs/icons/entrega.png");
+    ImageIcon iBrownie = new ImageIcon("./imgs/icons/ibrownie.png");
+    ImageIcon iconfeitar = new ImageIcon("./imgs/icons/sconfeitar.png");
+    private Object[] JTextField;
 
     public CadastraPedidoController(SistemaBrownie sistema, JFrame janela){
         this.sistema = sistema;
         this.janelaPrincipal = janela;
     }
     public void actionPerformed(ActionEvent e){
-        String nome = JOptionPane.showInputDialog("Nome do clinte: ");
+
+        String nome = (String) JOptionPane.showInputDialog(null,"Nome do Cliente:","Cadastrar Pedido",JOptionPane.QUESTION_MESSAGE,addcar,JTextField,null);
         if(nome == null){
             JOptionPane.showMessageDialog(janelaPrincipal, "Cadastro cancelado","Cancelado",JOptionPane.ERROR_MESSAGE);
         }
@@ -24,10 +31,10 @@ public class CadastraPedidoController implements ActionListener {
         }else{
             String[] opcoes = {"ENTREGA", "RETIRADA"};
             int op = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o tipo de entrega:"
-                    ,"Entrega",0,2,null,opcoes,opcoes[0]);
+                    ,"Entrega",0,2,disk,opcoes,opcoes[0]);
             Cliente c1 = new Cliente(nome);
             if(op==0){
-                String numeroCasa = JOptionPane.showInputDialog("Numero da casa: ");
+                String numeroCasa = (String) JOptionPane.showInputDialog(null,"Numero da casa: ","Entrega",JOptionPane.QUESTION_MESSAGE,local,JTextField,null);
                 if(numeroCasa == null){
                     JOptionPane.showMessageDialog(janelaPrincipal, "Cadastro cancelado","Cancelado",JOptionPane.ERROR_MESSAGE);
                     op=-1;
@@ -35,7 +42,7 @@ public class CadastraPedidoController implements ActionListener {
                     JOptionPane.showMessageDialog(janelaPrincipal, "Numero da casa não pode ser vazio", "Cancelado", JOptionPane.WARNING_MESSAGE);
                     op = - 1;
                 }else {
-                    String endereco = JOptionPane.showInputDialog("Digete o seu endereço:");
+                    String endereco = (String) JOptionPane.showInputDialog(null,"Digete o seu endereço:","Entrega",JOptionPane.QUESTION_MESSAGE,local,JTextField,null);
                     if(endereco == null){
                         JOptionPane.showMessageDialog(janelaPrincipal, "Cadastro cancelado","Cancelado",JOptionPane.ERROR_MESSAGE);
                         op=-1;
@@ -66,7 +73,7 @@ public class CadastraPedidoController implements ActionListener {
                     ArrayList<String> listaTiposFinal = new ArrayList<>(listaTipos);
 
                     int tipo = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o tipo do produto:",
-                            "Tipos",0,listaTipos.size(),null,listaTipos.toArray(),listaTipos);
+                            "Tipos",0,listaTipos.size(),iBrownie,listaTipos.toArray(),listaTipos);
                     Set<String> listaSabor = new LinkedHashSet<>();
                     for(Produto p : sistema.listaDeProdutos()){
                         if(listaTiposFinal.get(tipo).equals(p.getTipo())){
@@ -75,7 +82,7 @@ public class CadastraPedidoController implements ActionListener {
                     }
                     ArrayList<String> listaSaborFinal = new ArrayList<>(listaSabor);
 
-                    int sabor = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o Sabor do produto:","Sabores",0,listaSabor.size(),null,listaSabor.toArray(),listaSabor);
+                    int sabor = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o Sabor do produto:","Sabores",0,listaSabor.size(),iconfeitar,listaSabor.toArray(),listaSabor);
 
                     try {
                         Produto produto = sistema.procurarProduto(listaTiposFinal.get(tipo), listaSaborFinal.get(sabor));
@@ -87,7 +94,7 @@ public class CadastraPedidoController implements ActionListener {
 
                     String[] comprando = {"SIM", "NÃO"};
                     condicao = JOptionPane.showOptionDialog(janelaPrincipal, "Deseja continuar comprando?:","Carrinho"
-                            ,0,2,null,comprando,comprando[0]);
+                            ,0,2,addcar,comprando,comprando[0]);
 
                 }
                 if(op != -1){

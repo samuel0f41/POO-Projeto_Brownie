@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 public class FinalizaPedidoController implements ActionListener {
     private SistemaBrownie sistema;
     private JFrame janelaPrincipal;
+    ImageIcon bagCheck = new ImageIcon("./imgs/icons/sacola.png");
+    private Object[] JTextField;
 
     public FinalizaPedidoController(SistemaBrownie sistema, JFrame janela){
         this.sistema = sistema;
@@ -15,7 +17,7 @@ public class FinalizaPedidoController implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e){
-        int codigoPedido = Integer.parseInt(JOptionPane.showInputDialog(janelaPrincipal, "Codigo pedido: "));
+        int codigoPedido = Integer.parseInt((String) JOptionPane.showInputDialog(janelaPrincipal, "Codigo pedido: ","Finalizar Pedido",JOptionPane.QUESTION_MESSAGE,bagCheck,JTextField,null));
         try {
             sistema.finalizarPedido(codigoPedido);
             JOptionPane.showMessageDialog(janelaPrincipal, "Pedido: "+  codigoPedido + " finalizado!");
