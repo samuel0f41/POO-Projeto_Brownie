@@ -35,7 +35,7 @@ public class VerLucroDoMes implements ActionListener {
         }
 
         double  valorTotal =  sistema.calculaLucroMensal(mes);
-        JOptionPane.showMessageDialog(janelaPrincipal, "Lucro de vendas: " + valorTotal + " No mes de"+ nomeMes);
+        JOptionPane.showMessageDialog(janelaPrincipal, "Lucro de vendas: " + valorTotal + " no mes de"+ nomeMes);
     }
 
 }
