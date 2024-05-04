@@ -58,9 +58,9 @@ public class BrownieGerenciadorGui extends JFrame {
 
         JMenu menuAtualizar = new JMenu("Atualizar");
         JMenuItem menuAlteraQuantidadeEstoque = new JMenuItem("Estoque do produto");
-        JMenuItem menuVer = new JMenuItem("Ver quantidade no estoque");
+        JMenuItem menuVerQuantidadeDoProdutoNoEstoque = new JMenuItem("Ver quantidade do Produto no estoque");
         menuAtualizar.add(menuAlteraQuantidadeEstoque);
-        menuAtualizar.add(menuVer);
+        menuAtualizar.add(menuVerQuantidadeDoProdutoNoEstoque);
 
         JMenu menuListar = new JMenu("Listar");
         JMenuItem menuListarProdutos = new JMenuItem("Produtos");
@@ -74,9 +74,16 @@ public class BrownieGerenciadorGui extends JFrame {
         menuPedidosPendentes.add(menuListarPedidosPendentes);
         menuPedidosPendentes.add(menuCancelarPedido);
 
-        JMenu menuLucros = new JMenu("Calcular Lucro");
-        JMenuItem menuVerQuantidadeVendasDoMes = new JMenuItem("Quantidade de vendas do Mes");
+        JMenu menuLucros = new JMenu("Lucro");
+        JMenuItem menuVerQuantidadeVendasDoMes = new JMenuItem("Ver Quantidade de vendas do Mes");
+        JMenuItem menuVerQuantidadeVendasDoAno = new JMenuItem("Ver Quantidade de vendas do Ano");
+        JMenuItem menuVerLucroDoMes = new JMenuItem("Ver Lucro do Mês");
+        JMenuItem menuVerLucroDoAno = new JMenuItem("Ver Lucro do Ano");
+        menuLucros.add(menuVerLucroDoMes);
+        menuLucros.add(menuVerLucroDoAno);
         menuLucros.add(menuVerQuantidadeVendasDoMes);
+        menuLucros.add(menuVerQuantidadeVendasDoAno);
+
 
         JMenu menuSalvar = new JMenu("Salvar");
         JMenuItem menuSalvarDados = new JMenuItem("Dados atuais");
@@ -99,21 +106,16 @@ public class BrownieGerenciadorGui extends JFrame {
         menuCadastrarProduto.addActionListener(new CadastraProdutoController(sistema, this));
         menuRemoverProduto.addActionListener(new RemoveProdutoController(sistema, this));
         menuAlteraQuantidadeEstoque.addActionListener(new AtualizaQuantidadeBrownieController(sistema, this));
-        menuVer.addActionListener((ae)->{
-            String sabor = JOptionPane.showInputDialog("Qual sabor do Brownie: \n"+
-                    "\nBrigadeiro [1] ou Ninho [2] \nDois Amores [3] " +
-                    "ou Ninho com nutella[4] \nDoce de Leite[5]");
-
-            try {
-                Produto p = sistema.procurarProduto("","");
-                JOptionPane.showMessageDialog(null, "Quantidade no estoque: "+ p.getQtEstoque());
-
-            } catch (ProdutoNaoExisteException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        menuVerQuantidadeDoProdutoNoEstoque.addActionListener(new VerQuantidadeDoProdutoNoEstoqueController(sistema, this));
         menuCancelarPedido.addActionListener(new CancelarPedidoController(sistema, this));
         menuVerQuantidadeVendasDoMes.addActionListener(new QuantidadeDeVendasMensalController(sistema, this));
+        menuVerLucroDoMes.addActionListener(new VerLucroDoMes(sistema, this));
+        menuVerLucroDoAno.addActionListener(new VerLucroDoAno(sistema, this));
+//        menuVerQuantidadeVendasDoMes.addActionListener(new VerQuantidadeVendasDoDoMes(sistema, this));
+//        menuVerQuantidadeVendasDoMes.addActionListener(new VerQuantidadeVendasDoDoAno(sistema, this));
+
+
+
 
         menuListarPedidos.addActionListener((ae) ->{
             JOptionPane.showMessageDialog(this, sistema.listaDeTodosPedidos());
