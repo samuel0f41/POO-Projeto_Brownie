@@ -93,9 +93,6 @@ public class CadastraPedidoController implements ActionListener {
                     String[] comprando = {"SIM", "NÃO"};
                     condicao = JOptionPane.showOptionDialog(janelaPrincipal, "Deseja continuar comprando?:","Carrinho"
                             ,0,2,addcar,comprando,comprando[0]);
-//                    int condicao = JOptionPane.showOptionDialog(janelaPrincipal, "Deseja continuar comprando?:","Carrinho"
-//                            ,0,2,JOptionPane.QUESTION_MESSAGE,comprando,comprando[0]);
-
                 }
                 if(op != -1){
                     Pedido pedido = new Pedido(c1,carrinho);
