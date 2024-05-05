@@ -134,7 +134,6 @@ public class BrownieGerenciadorGui extends JFrame {
 
         setJMenuBar(barraMenu);
     }
-
     public static void main(String [] args){
         JFrame janela = new BrownieGerenciadorGui();
         janela.setVisible(true);

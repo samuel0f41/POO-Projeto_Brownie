@@ -1,6 +1,5 @@
 package sistema.Sam_Math_Rona;
 
-import javax.print.attribute.standard.JobKOctets;
 import javax.swing.*;
 import java.io.*;
 import java.time.LocalDate;
@@ -71,7 +70,7 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
         }
     }
     @Override
-    public void cadastrarPedido(Pedido pedido) throws CodigoPedidoJaExiste, EstoqueDoProdutoVazio{
+    public void cadastrarPedido(Pedido pedido) throws CodigoPedidoJaExiste, EstoqueDoProdutoVazioException {
         //achar ultimo codigo pecorrendo o ultimo codigo maior das listas de pedidos finalizados e pedidos pendentes
         int codigoPedidosPendentes = 0;
         int codigoPedidosFinalizados = 0;
@@ -103,7 +102,7 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
             }
             if(estoqueVazio){
                 JOptionPane.showMessageDialog(null, produtoVazio + "\nPedido não cadastrado!!");
-                throw new EstoqueDoProdutoVazio(produtoVazio);
+                throw new EstoqueDoProdutoVazioException(produtoVazio);
             }else{
                 this.pedidosPendentes.put(pedido.getCodigo(), pedido);
             }

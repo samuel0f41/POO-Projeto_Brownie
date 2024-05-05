@@ -35,7 +35,7 @@ public class VerQuantidadeDoProdutoNoEstoqueController implements ActionListener
         }
         ArrayList<String> listaSaborFinal = new ArrayList<>(listaSabor);
 
-        int sabor = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o Sabor do produto:","Quantidade do Produto no Estoque",0,listaSabor.size(),iconfeitar,listaSabor.toArray(),listaSabor);
+        int sabor = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o Sabor do produto:", "Sabores", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, iconfeitar, listaSabor.toArray(), listaSabor);
 
 
         try {

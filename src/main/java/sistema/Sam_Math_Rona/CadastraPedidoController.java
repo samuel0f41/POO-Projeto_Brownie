@@ -101,7 +101,7 @@ public class CadastraPedidoController implements ActionListener {
                         sistema.cadastrarPedido(pedido);
                     } catch (CodigoPedidoJaExiste ex) {
                         throw new RuntimeException(ex);
-                    } catch (EstoqueDoProdutoVazio ex) {
+                    } catch (EstoqueDoProdutoVazioException ex) {
                         throw new RuntimeException(ex);
                     }
                     JOptionPane.showMessageDialog(janelaPrincipal, pedido.toString());
