@@ -39,7 +39,7 @@ public class AtualizaQuantidadeBrownieController implements ActionListener {
 
         int sabor = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o Sabor do produto:","Estoque do Produto",0,listaSabor.size(),iconfeitar,listaSabor.toArray(),listaSabor);
 
-        String quant = (String) JOptionPane.showInputDialog(janelaPrincipal,"Digite o valor a abastecer: ","Estoque do Produto",JOptionPane.QUESTION_MESSAGE,pvalor,JTextField,null);
+        String quant = (String) JOptionPane.showInputDialog(janelaPrincipal,"Digite a quantidade que vai abastecer desse sabor: ","Estoque do Produto",JOptionPane.QUESTION_MESSAGE,pvalor,JTextField,null);
         int quanti = Integer.parseInt(quant);
 
         try {

@@ -1,5 +1,6 @@
 package sistema.Sam_Math_Rona;
 
+import javax.print.attribute.standard.JobKOctets;
 import javax.swing.*;
 import java.io.*;
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
             this.produtos = gravadorProdutos.leProdutos();
             this.pedidos = gravadorPedidos.lePedidos();
             this.pedidosPendentes = gravadorPedidosPendentes.lePedidosPendentes();
-            JOptionPane.showMessageDialog(null, "Dados recuperados: \nProdutos cadastrados \nLista de Pedidos Pendentes\nLista de Pedidos concluidos");
+            JOptionPane.showMessageDialog(null, "Dados 100% recuperados: \nProdutos cadastrados! \nLista de Pedidos Pendentes!\nLista de Pedidos concluidos!");
         }catch (IOException e){
             System.err.println((e.getMessage()));
             this.produtos = new LinkedList<>();
@@ -36,6 +37,7 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
             this.gravadorProdutos.gravaProduto(this.produtos);
             this.gravadorPedidos.gravaPedidos(this.pedidos);
             this.gravadorPedidosPendentes.gravaPedidosPendentes(this.pedidosPendentes);
+            JOptionPane.showMessageDialog(null, "Dados 100% Salvos: \nProdutos cadastrados! \nLista de Pedidos Pendentes!\nLista de Pedidos concluidos!");
         }catch (IOException e){
             System.err.println(e.getMessage());
         }
