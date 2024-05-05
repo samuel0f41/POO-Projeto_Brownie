@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 public class CancelarPedidoController implements ActionListener {
     private SistemaBrownie sistema;
     private JFrame janelaPrincipal;
+    ImageIcon cOder = new ImageIcon("./imgs/icons/cPedido.png");
+    ImageIcon check = new ImageIcon("./imgs/icons/feito.png");
+    private Object[] JTextField;
 
     public CancelarPedidoController(SistemaBrownie sistema, JFrame janela){
         this.sistema = sistema;
@@ -15,10 +18,10 @@ public class CancelarPedidoController implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e){
-        int codigoPedido = Integer.parseInt(JOptionPane.showInputDialog(janelaPrincipal, "Codigo pedido: "));
+        int codigoPedido = Integer.parseInt((String) JOptionPane.showInputDialog(janelaPrincipal, "Codigo pedido: ","Cancelar Pedido",JOptionPane.QUESTION_MESSAGE,cOder,JTextField,null));
         try {
             sistema.cancelarPedido(codigoPedido);
-            JOptionPane.showMessageDialog(janelaPrincipal, "Pedido: "+  codigoPedido + " cancelado!");
+            JOptionPane.showMessageDialog(janelaPrincipal, "Pedido: "+  codigoPedido + " cancelado!","Cancelar Pedido",JOptionPane.INFORMATION_MESSAGE,check);
         } catch (PedidoNaoExisteException ex) {
             throw new RuntimeException(ex);
         }
