@@ -18,7 +18,7 @@ public class FinalizaPedidoController implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e){
-        int codigoPedido = Integer.parseInt((String) JOptionPane.showInputDialog(janelaPrincipal, "Codigo pedido: ","Finalizar Pedido",JOptionPane.QUESTION_MESSAGE,bagCheck,JTextField,null));
+        int codigoPedido = Integer.parseInt((String) JOptionPane.showInputDialog(janelaPrincipal, "Codigo pedido: ","Finalizar Pedido",JOptionPane.DEFAULT_OPTION,bagCheck,JTextField,null));
         try {
             sistema.finalizarPedido(codigoPedido);
             JOptionPane.showMessageDialog(janelaPrincipal, "Pedido: "+  codigoPedido + " finalizado!","Finalizar Pedido",JOptionPane.INFORMATION_MESSAGE,check);

@@ -46,7 +46,7 @@ public class SistemaBrownieTest {
 
 
     @Test
-    public void testaCadastrarPedido() throws ProdutoJaExisteException, CodigoPedidoJaExiste, PedidoNaoExisteException {
+    public void testaCadastrarPedido() throws ProdutoJaExisteException, CodigoPedidoJaExiste, PedidoNaoExisteException, EstoqueDoProdutoVazio {
         Produto p1 = new Produto("Brownie", "Morango", 10, 5.00);
         assertEquals(1, sistema.listaDeProdutos().size());
 
@@ -71,7 +71,7 @@ public class SistemaBrownieTest {
     }
 
     @Test
-    public void testaRemoverPedido() throws ProdutoJaExisteException, CodigoPedidoJaExiste, PedidoNaoExisteException {
+    public void testaRemoverPedido() throws ProdutoJaExisteException, CodigoPedidoJaExiste, PedidoNaoExisteException, EstoqueDoProdutoVazio {
          Produto p1 = new Produto("Brownie", "Morango", 10, 5.00);
         assertEquals(1, sistema.listaDeProdutos().size());
 

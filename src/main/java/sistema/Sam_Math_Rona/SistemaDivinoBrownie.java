@@ -8,7 +8,7 @@ public interface SistemaDivinoBrownie {
     List<Pedido> listaDeTodosPedidos();
     List<Pedido> listaDePedidosPendentes();
 
-    void cadastrarPedido(Pedido pedido) throws CodigoPedidoJaExiste;
+    void cadastrarPedido(Pedido pedido) throws CodigoPedidoJaExiste, EstoqueDoProdutoVazio;
     void cancelarPedido(int codigo) throws PedidoNaoExisteException;
     void finalizarPedido(int codigo) throws PedidoNaoExisteException;
 

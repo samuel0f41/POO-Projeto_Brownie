@@ -81,9 +81,7 @@ public class CadastraPedidoController implements ActionListener {
                         }
                     }
                     ArrayList<String> listaSaborFinal = new ArrayList<>(listaSabor);
-
-                    int sabor = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o Sabor do produto:","Sabores",0,listaSabor.size(),iconfeitar,listaSabor.toArray(),listaSabor);
-
+                    int sabor = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o Sabor do produto:", "Sabores", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, iconfeitar, listaSabor.toArray(), listaSabor);
                     try {
                         Produto produto = sistema.procurarProduto(listaTiposFinal.get(tipo), listaSaborFinal.get(sabor));
                         carrinho.add(produto);
@@ -95,6 +93,8 @@ public class CadastraPedidoController implements ActionListener {
                     String[] comprando = {"SIM", "NÃO"};
                     condicao = JOptionPane.showOptionDialog(janelaPrincipal, "Deseja continuar comprando?:","Carrinho"
                             ,0,2,addcar,comprando,comprando[0]);
+//                    int condicao = JOptionPane.showOptionDialog(janelaPrincipal, "Deseja continuar comprando?:","Carrinho"
+//                            ,0,2,JOptionPane.QUESTION_MESSAGE,comprando,comprando[0]);
 
                 }
                 if(op != -1){
@@ -103,6 +103,8 @@ public class CadastraPedidoController implements ActionListener {
                     try {
                         sistema.cadastrarPedido(pedido);
                     } catch (CodigoPedidoJaExiste ex) {
+                        throw new RuntimeException(ex);
+                    } catch (EstoqueDoProdutoVazio ex) {
                         throw new RuntimeException(ex);
                     }
                     JOptionPane.showMessageDialog(janelaPrincipal, pedido.toString());

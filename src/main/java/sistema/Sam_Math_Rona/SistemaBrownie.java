@@ -71,8 +71,8 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
         }
     }
     @Override
-    public void cadastrarPedido(Pedido pedido) throws CodigoPedidoJaExiste{
-        //achar ultimo codigo pecorrendo o ultimo maior da lista de pedidos finalizados e pedidos pendentes
+    public void cadastrarPedido(Pedido pedido) throws CodigoPedidoJaExiste, EstoqueDoProdutoVazio{
+        //achar ultimo codigo pecorrendo o ultimo codigo maior das listas de pedidos finalizados e pedidos pendentes
         int codigoPedidosPendentes = 0;
         int codigoPedidosFinalizados = 0;
         int codigoAtual = 0;
@@ -92,7 +92,22 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
                 throw new CodigoPedidoJaExiste("Ja existe um pedido com esse codigo");
 
         }else{
-            this.pedidosPendentes.put(pedido.getCodigo(), pedido);
+            List<Produto> carrinho = pedido.getCarrinho();
+            boolean estoqueVazio = false;
+            String produtoVazio = "";
+            for(Produto p: carrinho){
+                if(p.getQtEstoque() == 0){
+                    estoqueVazio =  true;
+                    produtoVazio = p.getTipo() + " de sabor: " + p.getSabor() + " com estoque VAZIO!";
+                }
+            }
+            if(estoqueVazio){
+                JOptionPane.showMessageDialog(null, produtoVazio + "\nPedido não cadastrado!!");
+                throw new EstoqueDoProdutoVazio(produtoVazio);
+            }else{
+                this.pedidosPendentes.put(pedido.getCodigo(), pedido);
+            }
+
 
         }
 
@@ -111,6 +126,10 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
         if(pedidosPendentes.containsKey(codigo)){
             Pedido pedido = pedidosPendentes.get(codigo);
             pedido.setEstadoPedido(EstadoPedido.FINALIZADO);
+            List <Produto> carrinho = pedido.getCarrinho();
+            for(Produto p: carrinho){
+                p.setQtEstoque(p.getQtEstoque()-1);
+            }
             pedidos.put(pedido.getCodigo(), pedido);
             pedidosPendentes.remove(pedido.getCodigo());
         }else{
@@ -127,13 +146,17 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
         }
         produtos.add(produto);
     }
+
     @Override
     public void removerProduto(String tipo, String sabor) throws ProdutoNaoExisteException {
-        boolean produtoEncontrado = false; // Variável para verificar se o produto foi encontrado
-        for(Produto p: produtos){
+        Iterator<Produto> iterator = produtos.iterator();
+        boolean produtoEncontrado = false;
+        while (iterator.hasNext()) {
+            Produto p = iterator.next();
             if (p.getSabor().equals(sabor) && p.getTipo().equals(tipo)) {
-                produtos.remove(p);
+                iterator.remove();
                 produtoEncontrado = true;
+                break;
             }
         }
         if (!produtoEncontrado) {
