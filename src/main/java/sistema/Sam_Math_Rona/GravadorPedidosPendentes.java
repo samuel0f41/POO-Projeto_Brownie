@@ -7,7 +7,7 @@ public class GravadorPedidosPendentes {
     public Map<Integer, Pedido> lePedidosPendentes() throws IOException {
         ObjectInputStream in = null;
         try {
-            in = new ObjectInputStream(new FileInputStream("dadosPedidosPendentes.dat"));
+            in = new ObjectInputStream(new FileInputStream("dadosPedidosPendenteS.dat"));
             return (Map<Integer, Pedido>) in.readObject();
         }catch (FileNotFoundException e) {
             throw new IOException("Não foi encontrado o arquivo dados.dat", e);

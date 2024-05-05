@@ -119,7 +119,7 @@ public class SistemaBrownie implements SistemaDivinoBrownie {
     @Override
     public void cadastrarProduto(Produto produto)throws ProdutoJaExisteException{
         for(Produto p : produtos){
-            if(p.getSabor().equals(produto.getSabor()) && p.getTipo().equals(produto.getTipo())){
+            if(p.getTipo().equals(produto.getTipo()) && p.getSabor().equals(produto.getSabor())){
                 throw new ProdutoJaExisteException("Esse produto ja foi cadastrado, tente outro!");
             }
         }

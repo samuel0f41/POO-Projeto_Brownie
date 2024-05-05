@@ -3,7 +3,7 @@ package sistema.Sam_Math_Rona;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Produto implements Serializable {
+public class    Produto implements Serializable {
     private String tipo;
     private String sabor;
     private int qtEstoque;

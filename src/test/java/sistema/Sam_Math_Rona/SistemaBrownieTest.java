@@ -16,7 +16,7 @@ public class SistemaBrownieTest {
         Produto p1 = new Produto("Brownie", "Morango",1,5.0);
         assertEquals(1  , sistema.listaDeProdutos().size());
         sistema.cadastrarProduto(p1);
-        assertEquals(2  , sistema.listaDeProdutos().size());
+        assertEquals(2 , sistema.listaDeProdutos().size());
 
     }
     @Test
