@@ -94,15 +94,7 @@ public class BrownieGerenciadorGui extends JFrame {
 
         menuCadastrarPedido.addActionListener(new CadastraPedidoController(sistema, this));
         menuFinalizarPedido.addActionListener( new FinalizaPedidoController(sistema, this   ));
-        menuRemoverPedidoFinalizado.addActionListener((ae) -> {
-            int codigoPedido = Integer.parseInt(JOptionPane.showInputDialog(null, "Codigo pedido: "));
-            try {
-                sistema.removerPedidoFinalizado(codigoPedido);
-                JOptionPane.showMessageDialog(null, "Pedido: "+  codigoPedido + " Removido!");
-            } catch (PedidoNaoExisteException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
+        menuRemoverPedidoFinalizado.addActionListener(new RemoverPedidoFinalizado(sistema, this));
 
         menuCadastrarProduto.addActionListener(new CadastraProdutoController(sistema, this));
         menuRemoverProduto.addActionListener(new RemoveProdutoController(sistema, this));

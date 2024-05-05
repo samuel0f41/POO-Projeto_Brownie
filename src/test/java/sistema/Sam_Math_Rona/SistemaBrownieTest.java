@@ -34,13 +34,13 @@ public class SistemaBrownieTest {
     @Test
     public void testaRemoverProduto() throws ProdutoJaExisteException, ProdutoNaoExisteException {
         Produto p1 = new Produto("Brownie", "Morango", 1, 5.00);
-        assertEquals(4, sistema.listaDeProdutos().size());
+        assertTrue(sistema.listaDeProdutos().size()==1);
 
         sistema.cadastrarProduto(p1);
-        assertEquals(5, sistema.listaDeProdutos().size());
+        assertEquals(2, sistema.listaDeProdutos().size());
 
         sistema.removerProduto("Brownie", "Morango");
-        assertTrue(sistema.listaDeProdutos().size()==4);
+        assertEquals(1, sistema.listaDeProdutos().size());
 
     }
 
@@ -48,10 +48,10 @@ public class SistemaBrownieTest {
     @Test
     public void testaCadastrarPedido() throws ProdutoJaExisteException, CodigoPedidoJaExiste, PedidoNaoExisteException {
         Produto p1 = new Produto("Brownie", "Morango", 10, 5.00);
-        assertEquals(4, sistema.listaDeProdutos().size());
+        assertEquals(1, sistema.listaDeProdutos().size());
 
         sistema.cadastrarProduto(p1);
-        assertEquals(5, sistema.listaDeProdutos().size());
+        assertEquals(2, sistema.listaDeProdutos().size());
 
         List<Produto> carrinho = new LinkedList<>();
         carrinho.add(p1);
@@ -64,17 +64,19 @@ public class SistemaBrownieTest {
 
         sistema.finalizarPedido(pe1.getCodigo());
 
-        assertTrue(sistema.listaDeTodosPedidos().size()==3);
+        assertTrue(sistema.listaDePedidosPendentes().size()==0);
+
+        assertTrue(sistema.listaDeTodosPedidos().size()==1);
 
     }
 
     @Test
     public void testaRemoverPedido() throws ProdutoJaExisteException, CodigoPedidoJaExiste, PedidoNaoExisteException {
         Produto p1 = new Produto("Brownie", "Morango", 10, 5.00);
-        assertEquals(4, sistema.listaDeProdutos().size());
+        assertEquals(1, sistema.listaDeProdutos().size());
 
         sistema.cadastrarProduto(p1);
-        assertEquals(5, sistema.listaDeProdutos().size());
+        assertEquals(2, sistema.listaDeProdutos().size());
 
         List<Produto> carrinho = new LinkedList<>();
         carrinho.add(p1);
@@ -91,10 +93,10 @@ public class SistemaBrownieTest {
 
         sistema.cadastrarPedido(pe1);
         sistema.finalizarPedido(pe1.getCodigo());
-        assertTrue(sistema.listaDeTodosPedidos().size()==3);
+        assertTrue(sistema.listaDeTodosPedidos().size()==1);
 
         sistema.removerPedidoFinalizado(pe1.getCodigo());
-        assertTrue(sistema.listaDeTodosPedidos().size()==2);
+        assertTrue(sistema.listaDeTodosPedidos().size()==0);
 
     }
 }
