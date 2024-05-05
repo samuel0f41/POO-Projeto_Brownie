@@ -12,6 +12,10 @@ import java.util.Set;
 public class AtualizaQuantidadeBrownieController implements ActionListener {
     private SistemaBrownie sistema;
     private JFrame janelaPrincipal;
+    ImageIcon iBrownie = new ImageIcon("./imgs/icons/ibrownie.png");
+    ImageIcon iconfeitar = new ImageIcon("./imgs/icons/sconfeitar.png");
+    ImageIcon pvalor = new ImageIcon("./imgs/icons/preco.png");
+    private Object[] JTextField;
 
     public AtualizaQuantidadeBrownieController(SistemaBrownie sistema, JFrame janela){
         this.sistema = sistema;
@@ -24,7 +28,7 @@ public class AtualizaQuantidadeBrownieController implements ActionListener {
         }
         ArrayList<String> listaTiposFinal = new ArrayList<>(listaTipos);
 
-        int tipo = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o tipo do produto:","Tipos",0,listaTipos.size(),null,listaTipos.toArray(),listaTipos);
+        int tipo = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o tipo do produto:","Estoque do Produto",0,listaTipos.size(),iBrownie,listaTipos.toArray(),listaTipos);
         Set<String> listaSabor = new LinkedHashSet<>();
         for(Produto p : sistema.listaDeProdutos()){
             if(listaTiposFinal.get(tipo).equals(p.getTipo())){
@@ -33,9 +37,9 @@ public class AtualizaQuantidadeBrownieController implements ActionListener {
         }
         ArrayList<String> listaSaborFinal = new ArrayList<>(listaSabor);
 
-        int sabor = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o Sabor do produto:","Sabores",0,listaSabor.size(),null,listaSabor.toArray(),listaSabor);
+        int sabor = JOptionPane.showOptionDialog(janelaPrincipal, "Qual o Sabor do produto:","Estoque do Produto",0,listaSabor.size(),iconfeitar,listaSabor.toArray(),listaSabor);
 
-        String quant = JOptionPane.showInputDialog(janelaPrincipal,"Digite o valor a abastecer: ");
+        String quant = (String) JOptionPane.showInputDialog(janelaPrincipal,"Digite o valor a abastecer: ","Estoque do Produto",JOptionPane.QUESTION_MESSAGE,pvalor,JTextField,null);
         int quanti = Integer.parseInt(quant);
 
         try {
