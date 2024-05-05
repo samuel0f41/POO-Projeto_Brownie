@@ -3,10 +3,13 @@ package sistema.Sam_Math_Rona;
 import javax.swing.*;
 import java.awt.*;
 public class BrownieGerenciadorGui extends JFrame {
+    private Object[] JTextField;
     JLabel linha1, linha2;
     ImageIcon brownie;
     SistemaBrownie sistema = new SistemaBrownie();
     JMenuBar barraMenu = new JMenuBar();
+    ImageIcon iLixeira = new ImageIcon("./imgs/icons/lixeira.png");
+    ImageIcon check = new ImageIcon("./imgs/icons/feito.png");
     public BrownieGerenciadorGui(){
 
         setTitle("Sistema de vendas e Gerenciamento de Brownie");
@@ -95,10 +98,10 @@ public class BrownieGerenciadorGui extends JFrame {
         menuCadastrarPedido.addActionListener(new CadastraPedidoController(sistema, this));
         menuFinalizarPedido.addActionListener( new FinalizaPedidoController(sistema, this   ));
         menuRemoverPedidoFinalizado.addActionListener((ae) -> {
-            int codigoPedido = Integer.parseInt(JOptionPane.showInputDialog(null, "Codigo pedido: "));
+            int codigoPedido = Integer.parseInt((String) JOptionPane.showInputDialog(null, "Codigo pedido: ","Remover Pedido Finalizado",JOptionPane.QUESTION_MESSAGE,iLixeira,JTextField,null));
             try {
                 sistema.removerPedidoFinalizado(codigoPedido);
-                JOptionPane.showMessageDialog(null, "Pedido: "+  codigoPedido + " Removido!");
+                JOptionPane.showMessageDialog(null, "Pedido: "+  codigoPedido + " Removido!","Remover Pedido Finalizado",JOptionPane.INFORMATION_MESSAGE, check);
             } catch (PedidoNaoExisteException ex) {
                 throw new RuntimeException(ex);
             }

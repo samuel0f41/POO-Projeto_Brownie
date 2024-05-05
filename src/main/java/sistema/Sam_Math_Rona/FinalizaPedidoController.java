@@ -9,6 +9,7 @@ public class FinalizaPedidoController implements ActionListener {
     private SistemaBrownie sistema;
     private JFrame janelaPrincipal;
     ImageIcon bagCheck = new ImageIcon("./imgs/icons/sacola.png");
+    ImageIcon check = new ImageIcon("./imgs/icons/feito.png");
     private Object[] JTextField;
 
     public FinalizaPedidoController(SistemaBrownie sistema, JFrame janela){
@@ -20,7 +21,7 @@ public class FinalizaPedidoController implements ActionListener {
         int codigoPedido = Integer.parseInt((String) JOptionPane.showInputDialog(janelaPrincipal, "Codigo pedido: ","Finalizar Pedido",JOptionPane.QUESTION_MESSAGE,bagCheck,JTextField,null));
         try {
             sistema.finalizarPedido(codigoPedido);
-            JOptionPane.showMessageDialog(janelaPrincipal, "Pedido: "+  codigoPedido + " finalizado!");
+            JOptionPane.showMessageDialog(janelaPrincipal, "Pedido: "+  codigoPedido + " finalizado!","Finalizar Pedido",JOptionPane.INFORMATION_MESSAGE,check);
         } catch (PedidoNaoExisteException ex) {
             throw new RuntimeException(ex);
         }

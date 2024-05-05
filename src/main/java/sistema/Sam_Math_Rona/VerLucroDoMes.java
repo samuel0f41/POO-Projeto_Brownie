@@ -8,6 +8,10 @@ import java.time.Month;
 public class VerLucroDoMes implements ActionListener {
     private SistemaBrownie sistema;
     private JFrame janelaPrincipal;
+    ImageIcon calendar = new ImageIcon("./imgs/icons/calendario.png");
+    ImageIcon vendasTotal = new ImageIcon("./imgs/icons/venda.png");
+    private Object[] JTextField;
+
     public VerLucroDoMes(SistemaBrownie sistema, JFrame janela) {
         this.sistema = sistema;
         this.janelaPrincipal = janela;
@@ -17,8 +21,8 @@ public class VerLucroDoMes implements ActionListener {
         Month mes = null;
         String nomeMes = "";
         while (mes == null){
-            String mesPesquisar = JOptionPane.showInputDialog(janelaPrincipal, "Digite o Mês:\n1 - Janeiro\n2 - Fevereiro\n3 - Março\n4 - Abril" +
-                    "5 - Maio \n6 - Junho \n7 - Julho \n8 - Agosto \n9 - Setembro \n10 Outubro \n11 - Novembro \n12 - Dezembro");
+            String mesPesquisar = (String) JOptionPane.showInputDialog(janelaPrincipal, "Digite o Mês:\n1 - Janeiro\n2 - Fevereiro\n3 - Março\n4 - Abril" +
+                    "5 - Maio \n6 - Junho \n7 - Julho \n8 - Agosto \n9 - Setembro \n10 Outubro \n11 - Novembro \n12 - Dezembro", "Ver Lucro do Mês",JOptionPane.QUESTION_MESSAGE,calendar,JTextField,null);
             if(mesPesquisar.equals("1")){ mes = Month.JANUARY; nomeMes = "Janeiro"; }
             else if(mesPesquisar.equals("2")){ mes = Month.FEBRUARY; nomeMes = " Fevereiro";}
             else if(mesPesquisar.equals("3")){ mes = Month.MARCH; nomeMes = " Março";}
@@ -35,7 +39,7 @@ public class VerLucroDoMes implements ActionListener {
         }
 
         double  valorTotal =  sistema.calculaLucroMensal(mes);
-        JOptionPane.showMessageDialog(janelaPrincipal, "Lucro de vendas: " + valorTotal + " no mes de"+ nomeMes);
+        JOptionPane.showMessageDialog(janelaPrincipal, "Lucro de vendas: " + valorTotal + " no mes de"+ nomeMes,"Ver Lucro do Mês",JOptionPane.INFORMATION_MESSAGE,vendasTotal);
     }
 
 }

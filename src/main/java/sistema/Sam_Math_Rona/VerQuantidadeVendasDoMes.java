@@ -8,7 +8,11 @@ import java.time.Month;
 public class VerQuantidadeVendasDoMes implements ActionListener {
         private SistemaBrownie sistema;
         private JFrame janelaPrincipal;
-        public VerQuantidadeVendasDoMes(SistemaBrownie sistema, JFrame janela) {
+    ImageIcon calendar = new ImageIcon("./imgs/icons/calendario.png");
+    ImageIcon baglucro = new ImageIcon("./imgs/icons/lucro.png");
+    private Object[] JTextField;
+
+    public VerQuantidadeVendasDoMes(SistemaBrownie sistema, JFrame janela) {
             this.sistema = sistema;
             this.janelaPrincipal = janela;
         }
@@ -17,8 +21,8 @@ public class VerQuantidadeVendasDoMes implements ActionListener {
             Month mes = null;
             String nomeMes = "";
             while (mes == null){
-                String mesPesquisar = JOptionPane.showInputDialog(janelaPrincipal, "Digite o Mês:\n1 - Janeiro\n2 - Fevereiro\n3 - Março\n4 - Abril" +
-                        "5 - Maio \n6 - Junho \n7 - Julho \n8 - Agosto \n9 - Setembro \n10 Outubro \n11 - Novembro \n12 - Dezembro");
+                String mesPesquisar = (String) JOptionPane.showInputDialog(janelaPrincipal, "Digite o Mês:\n1 - Janeiro\n2 - Fevereiro\n3 - Março\n4 - Abril" +
+                        "5 - Maio \n6 - Junho \n7 - Julho \n8 - Agosto \n9 - Setembro \n10 Outubro \n11 - Novembro \n12 - Dezembro","Quantidade de Vendas do Mês",JOptionPane.QUESTION_MESSAGE,calendar,JTextField,null);
                 if(mesPesquisar.equals("1")){ mes = Month.JANUARY; nomeMes = "Janeiro"; }
                 else if(mesPesquisar.equals("2")){ mes = Month.FEBRUARY; nomeMes = " Fevereiro";}
                 else if(mesPesquisar.equals("3")){ mes = Month.MARCH; nomeMes = " Março";}
@@ -35,6 +39,6 @@ public class VerQuantidadeVendasDoMes implements ActionListener {
             }
 
             int  quantidadeDeVendaNoMes =  sistema.quantidadeDeVendasMensal(mes);
-            JOptionPane.showMessageDialog(janelaPrincipal, "Quantidade total de vendas: " + quantidadeDeVendaNoMes + " no mes de"+ nomeMes);
+            JOptionPane.showMessageDialog(janelaPrincipal, "Quantidade total de vendas: " + quantidadeDeVendaNoMes + " no mes de"+ nomeMes,"Quantidade de Vendas do Mês",JOptionPane.INFORMATION_MESSAGE,baglucro);
         }
 }
