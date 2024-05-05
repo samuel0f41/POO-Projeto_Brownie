@@ -9,7 +9,7 @@ public class VerQuantidadeVendasDoMes implements ActionListener {
         private SistemaBrownie sistema;
         private JFrame janelaPrincipal;
     ImageIcon calendar = new ImageIcon("./imgs/icons/calendario.png");
-    ImageIcon baglucro = new ImageIcon("./imgs/icons/lucro.png");
+    ImageIcon reciboQuant = new ImageIcon("./imgs/icons/recibo.png");
     private Object[] JTextField;
 
     public VerQuantidadeVendasDoMes(SistemaBrownie sistema, JFrame janela) {
@@ -39,6 +39,6 @@ public class VerQuantidadeVendasDoMes implements ActionListener {
             }
 
             int  quantidadeDeVendaNoMes =  sistema.quantidadeDeVendasMensal(mes);
-            JOptionPane.showMessageDialog(janelaPrincipal, "Quantidade total de vendas: " + quantidadeDeVendaNoMes + " no mes de"+ nomeMes,"Quantidade de Vendas do Mês",JOptionPane.INFORMATION_MESSAGE,baglucro);
+            JOptionPane.showMessageDialog(janelaPrincipal, "Quantidade total de vendas: " + quantidadeDeVendaNoMes + " no mes de"+ nomeMes,"Quantidade de Vendas do Mês",JOptionPane.INFORMATION_MESSAGE,reciboQuant);
         }
 }

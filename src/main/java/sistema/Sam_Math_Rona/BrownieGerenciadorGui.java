@@ -5,6 +5,9 @@ import java.awt.*;
 public class BrownieGerenciadorGui extends JFrame {
     JLabel linha1, linha2;
     ImageIcon brownie;
+    ImageIcon listCheck = new ImageIcon("./imgs/icons/listaV.png");
+    ImageIcon listControl = new ImageIcon("./imgs/icons/listaC.png");
+    ImageIcon listPending = new ImageIcon("./imgs/icons/listaP.png");
     SistemaBrownie sistema = new SistemaBrownie();
     JMenuBar barraMenu = new JMenuBar();
     public BrownieGerenciadorGui(){
@@ -108,13 +111,13 @@ public class BrownieGerenciadorGui extends JFrame {
 
 
         menuListarPedidos.addActionListener((ae) ->{
-            JOptionPane.showMessageDialog(this, sistema.listaDeTodosPedidos());
+            JOptionPane.showMessageDialog(this, sistema.listaDeTodosPedidos(),"Lista de Pedidos Finalizados",JOptionPane.INFORMATION_MESSAGE,listCheck);
         });
         menuListarProdutos.addActionListener((ae)->{
-            JOptionPane.showMessageDialog(this, sistema.listaDeProdutos());
+            JOptionPane.showMessageDialog(this, sistema.listaDeProdutos(),"Lista de Produtos Cadastrados",JOptionPane.INFORMATION_MESSAGE,listControl);
         });
         menuListarPedidosPendentes.addActionListener((ae) -> {
-            JOptionPane.showMessageDialog(this, sistema.listaDePedidosPendentes());
+            JOptionPane.showMessageDialog(this, sistema.listaDePedidosPendentes(),"Lista de Pedidos Pendentes",JOptionPane.INFORMATION_MESSAGE,listPending);
         });
         menuSalvarDados.addActionListener((ae) -> {
             sistema.salvarDados();
